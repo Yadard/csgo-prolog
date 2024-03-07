@@ -1,0 +1,16 @@
+?- times_champion(X, Y, "FaZe Clan", Z).
+?- times_champion(X, Y, "FaZe Clan", Z), nick(X, W).
+?- prodigy(X, Y, 18).
+?- prodigy(X, Y, Z).
+?- war_vet(X, Y).
+?- war_vet(X, Y, Z, W).
+?- war_vet(X, Y, Z).
+?- times_champion(_, "FaZe Clan", _, X).
+?- times_champion(_, _, "FaZe Clan", X).
+?- times_champion(_, _, "ESC_Gaming", X).
+?- times_champion(_, _, "ESC_Gaming", X).
+?- current_team(X, "ESC_Gaming").
+?- current_team(X, "ESC Gaming").
+?- better_team("FaZe Clan", "ESC_Gaming").
+?- better_team("FaZe Clan", "ESC Gaming").
+?- times_champion(_, _, "ESC Gaming", X).
