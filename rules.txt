@@ -1,4 +1,3 @@
-
 teammate(X,Y)  :-  current_team(X,Z), current_team(Y, Z).
 player_history_team(X, Y) :- current_team(Y, X); former_team(Y, X).
 compratriots(X, Y) :- nationality(Y, X).
@@ -7,7 +6,9 @@ twin(D,M,Y,N) :- birth_date(N, D), birth_month(N, M), birth_year(N, Y).
 
 times_champion(N, T, E, C) :- aggregate_all(count, champion(N, T, E), C), champion(N, T, E).
 times_vice(N, T, E, C) :- aggregate_all(count, vice(N, T, E), C), vice(N, T, E).
+wins(P, T, W) :- aggregate_all(count, champion(P, _, T), Cc), aggregate_all(count, vice(P, _, T), Cv), W is Cc+Cv.
 prodigy(Suck, Deez, Nuts) :- age(Suck, Deez), champion(Suck, _, Nuts), Deez < 19.
 war_vet(X, Y, Z) :- age(X, Z), captain(X, Y), Z > 28.
-better_team(X, Y) :- times_champion(_, _, X, XC), times_champion(_, _, Y, YC), XC > YC.
-
+better_team(X, Y) :- wins(_, X, XC), wins(_, Y, YC), XC > YC.
+matchup(Ta, Tb, Pa, Pb) :- wins(_, Ta, Ca), wins(_, Tb, Cb), Pa is Ca/(Ca+Cb), Pb is Cb/(Ca+Cb).
+better_player(Pa, Pb) :- wins(Pa, _, Wa), wins(Pb, _, Wb), Wa > Wb.

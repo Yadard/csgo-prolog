@@ -1,5 +1,6 @@
 :- discontiguous
         nick/2,
+        image/2,
         age/2,
     	role/2,
         birth_month/2,
@@ -11,7 +12,8 @@
         former_team/2,
         captain/2,
         champion/3,
-        vice/3.
+        vice/3,
+        team_img/2.
 
 
 teammate(X,Y)  :-  current_team(X,Z), current_team(Y, Z).
@@ -22,12 +24,16 @@ twin(D,M,Y,N) :- birth_date(N, D), birth_month(N, M), birth_year(N, Y).
 
 times_champion(N, T, E, C) :- aggregate_all(count, champion(N, T, E), C), champion(N, T, E).
 times_vice(N, T, E, C) :- aggregate_all(count, vice(N, T, E), C), vice(N, T, E).
+wins(P, T, W) :- aggregate_all(count, champion(P, _, T), Cc), aggregate_all(count, vice(P, _, T), Cv), W is Cc+Cv.
 prodigy(Suck, Deez, Nuts) :- age(Suck, Deez), champion(Suck, _, Nuts), Deez < 19.
 war_vet(X, Y, Z) :- age(X, Z), captain(X, Y), Z > 28.
-better_team(X, Y) :- times_champion(_, _, X, XC), times_champion(_, _, Y, YC), XC > YC.
+better_team(X, Y) :- wins(_, X, XC), wins(_, Y, YC), XC > YC.
+matchup(Ta, Tb, Pa, Pb) :- wins(_, Ta, Ca), wins(_, Tb, Cb), Pa is Ca/(Ca+Cb), Pb is Cb/(Ca+Cb).
+better_player(Pa, Pb) :- wins(Pa, _, Wa), wins(Pb, _, Wb), Wa > Wb.
 
 nick("Dennis Zetterlund", "dZ").
 entry_year("Dennis Zetterlund", 2016).
+image("Dennis Zetterlund", "https://liquipedia.net/commons/images/thumb/e/e5/DZ_at_DreamHack_Winter_2019.jpg/600px-DZ_at_DreamHack_Winter_2019.jpg").
                      
 age("Dennis Zetterlund", 26).
 birth_month("Dennis Zetterlund", "June").
@@ -60,6 +66,7 @@ vice("Dennis Zetterlund", "Dustin Expo Open", "Granit Gaming").
 
 nick("Max Lindkvist", "quix").
 entry_year("Max Lindkvist", 2010).
+image("Max Lindkvist", "https://liquipedia.net/commons/images/3/30/Quix_at_Leo_Vegas_Open.png").
                      
 age("Max Lindkvist", 31).
 birth_month("Max Lindkvist", "October").
@@ -94,6 +101,7 @@ vice("Max Lindkvist", "ESPORTSM 2016", "ArchAngels").
 
 nick("Magnus Frøslev", "Frøslev").
 entry_year("Magnus Frøslev", 2016).
+image("Magnus Frøslev", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Magnus Frøslev", 26).
 birth_month("Magnus Frøslev", "June").
@@ -123,8 +131,178 @@ champion("Magnus Frøslev", "Danish Championship 2017", "Fragsters").
 vice("Magnus Frøslev", "LOOT.BET Hotshot Series Season 1", "Unknown").
 
 
+nick("Jack Ström Mattsson", "Jackinho").
+entry_year("Jack Ström Mattsson", 2016).
+image("Jack Ström Mattsson", "https://liquipedia.net/commons/images/2/2e/Coalesce_Jackinho_2022.png").
+                     
+age("Jack Ström Mattsson", 25).
+birth_month("Jack Ström Mattsson", "March").
+birth_year("Jack Ström Mattsson", 1999).
+birth_day("Jack Ström Mattsson", 7).
+current_team("Jack Ström Mattsson", "Metizport").
+nationality("Jack Ström Mattsson", "Sweden").
+former_team("Jack Ström Mattsson", "Nordic Knights").
+former_team("Jack Ström Mattsson", "Property").
+former_team("Jack Ström Mattsson", "nerdRage").
+former_team("Jack Ström Mattsson", "Visomvet").
+former_team("Jack Ström Mattsson", "Prima Esport").
+former_team("Jack Ström Mattsson", "Fnatic").
+former_team("Jack Ström Mattsson", "Fnatic").
+former_team("Jack Ström Mattsson", "Coalesce").
+former_team("Jack Ström Mattsson", "Lilmix").
+former_team("Jack Ström Mattsson", "Metizport").
+role("Jack Ström Mattsson", "In-game leader").
+role("Jack Ström Mattsson", "AWPer").
+champion("Jack Ström Mattsson", "IESF World Esports Championship 2023", "Team Sweden").
+champion("Jack Ström Mattsson", "Svenska Elitserien Spring 2023", "00 Prospects").
+champion("Jack Ström Mattsson", "Fragleague Season 9", "Lilmix").
+champion("Jack Ström Mattsson", "Esportal Bybit Open 2022", "fightclub").
+champion("Jack Ström Mattsson", "Svenska Elitserien Spring 2021", "vinkelparty").
+champion("Jack Ström Mattsson", "Doritos Open Season 2", "greshjerna").
+champion("Jack Ström Mattsson", "Svenska Elitserien Spring 2020", "fightclub").
+vice("Jack Ström Mattsson", "cs_summit 7", "Fnatic").
+
+
+nick("Adam Ångström", "adamb").
+entry_year("Adam Ångström", 2021).
+image("Adam Ångström", "https://liquipedia.net/commons/images/thumb/9/9e/Adamb_Svenska_Elitserien_Spring_2022.png/600px-Adamb_Svenska_Elitserien_Spring_2022.png").
+                     
+age("Adam Ångström", 19).
+birth_month("Adam Ångström", "January").
+birth_year("Adam Ångström", 2005).
+birth_day("Adam Ångström", 7).
+current_team("Adam Ångström", "Metizport").
+nationality("Adam Ångström", "Sweden").
+former_team("Adam Ångström", "Fuz-Ion").
+former_team("Adam Ångström", "WANDERSTAR").
+former_team("Adam Ångström", "Lemondogs").
+former_team("Adam Ångström", "Young Ninjas").
+former_team("Adam Ångström", "Metizport").
+role("Adam Ångström", "Rifler").
+champion("Adam Ångström", "IESF World Esports Championship 2023", "Team Sweden").
+champion("Adam Ångström", "Subway Suberior League Season 1", "ztrfanclub").
+champion("Adam Ångström", "WePlay Academy League Season 6", "Young Ninjas").
+champion("Adam Ångström", "Prime League Season 3: Sweden", "Lemondogs").
+champion("Adam Ångström", "Esportal Truecaller Tournament", "sftsaftm").
+vice("Adam Ångström", "Svenska Elitserien Spring 2023", "Young Ninjas").
+vice("Adam Ångström", "Svenska Elitserien Fall 2022", "Young Ninjas").
+vice("Adam Ångström", "Svenska Elitserien Spring 2022", "Young Ninjas").
+
+
+nick("Linus Bergman", "nilo").
+entry_year("Linus Bergman", 2019).
+image("Linus Bergman", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
+                     
+age("Linus Bergman", 19).
+birth_month("Linus Bergman", "January").
+birth_year("Linus Bergman", 2005).
+birth_day("Linus Bergman", 4).
+current_team("Linus Bergman", "Metizport").
+nationality("Linus Bergman", "Sweden").
+former_team("Linus Bergman", "Silencio Esports").
+former_team("Linus Bergman", "GoBananas").
+former_team("Linus Bergman", "flowskola").
+former_team("Linus Bergman", "Young Ninjas").
+former_team("Linus Bergman", "Young Ninjas").
+former_team("Linus Bergman", "Young Ninjas").
+former_team("Linus Bergman", "Metizport").
+role("Linus Bergman", "Rifler").
+champion("Linus Bergman", "WePlay Academy League Season 6", "Young Ninjas").
+champion("Linus Bergman", "Atlantic Esportal Invitational", "Young Ninjas").
+champion("Linus Bergman", "Elisa Nordic Championship 2021 - Sweden", "Young Ninjas").
+champion("Linus Bergman", "Fragleague Season 5", "flowskola").
+vice("Linus Bergman", "Svenska Elitserien Spring 2023", "Young Ninjas").
+vice("Linus Bergman", "Svenska Elitserien Fall 2022", "Young Ninjas").
+vice("Linus Bergman", "Svenska Elitserien Spring 2021", "Young Ninjas").
+
+
+nick("Erik Gustafsson", "ztr").
+entry_year("Erik Gustafsson", 2018).
+image("Erik Gustafsson", "https://liquipedia.net/commons/images/thumb/0/0e/GODSENT_ztr_August_2023.png/600px-GODSENT_ztr_August_2023.png").
+                     
+age("Erik Gustafsson", 20).
+birth_month("Erik Gustafsson", "August").
+birth_year("Erik Gustafsson", 2003).
+birth_day("Erik Gustafsson", 2).
+captain("Erik Gustafsson", "Metizport").
+current_team("Erik Gustafsson", "Metizport").
+nationality("Erik Gustafsson", "Sweden").
+former_team("Erik Gustafsson", "Represent Gaming").
+former_team("Erik Gustafsson", "Valorix Esport").
+former_team("Erik Gustafsson", "Backbenimboy").
+former_team("Erik Gustafsson", "Prima eSport").
+former_team("Erik Gustafsson", "KPI Gaming").
+former_team("Erik Gustafsson", "Young Ninjas").
+former_team("Erik Gustafsson", "Young Ninjas").
+former_team("Erik Gustafsson", "NIP").
+former_team("Erik Gustafsson", "Young Ninjas").
+former_team("Erik Gustafsson", "Young Ninjas").
+former_team("Erik Gustafsson", "GODSENT").
+former_team("Erik Gustafsson", "GODSENT").
+former_team("Erik Gustafsson", "Metizport").
+role("Erik Gustafsson", "In-game leader").
+role("Erik Gustafsson", "Rifler").
+champion("Erik Gustafsson", "IESF World Esports Championship 2023", "Team Sweden").
+champion("Erik Gustafsson", "WePlay Academy League Season 6", "Young Ninjas").
+champion("Erik Gustafsson", "Global Esports Tour Dubai 2022", "Ninjas in Pyjamas").
+vice("Erik Gustafsson", "WePlay Academy League Season 1", "Young Ninjas").
+vice("Erik Gustafsson", "Flashpoint Season 3", "Ninjas in Pyjamas").
+
+
+nick("Tim Ångström", "susp").
+entry_year("Tim Ångström", 2021).
+image("Tim Ångström", "https://liquipedia.net/commons/images/thumb/8/81/Susp_Svenska_Elitserien_Spring_2022.png/600px-Susp_Svenska_Elitserien_Spring_2022.png").
+                     
+age("Tim Ångström", 19).
+birth_month("Tim Ångström", "January").
+birth_year("Tim Ångström", 2005).
+birth_day("Tim Ångström", 7).
+current_team("Tim Ångström", "Metizport").
+nationality("Tim Ångström", "Sweden").
+former_team("Tim Ångström", "X-Gamer").
+former_team("Tim Ångström", "Lemondogs").
+former_team("Tim Ångström", "KTRL").
+former_team("Tim Ångström", "Juggernauts").
+former_team("Tim Ångström", "Budapest Five").
+former_team("Tim Ångström", "00 Nation").
+former_team("Tim Ångström", "00 Nation").
+former_team("Tim Ångström", "Metizport").
+role("Tim Ångström", "Rifler").
+champion("Tim Ångström", "European Pro League Season 11", "00 Nation").
+champion("Tim Ångström", "Pinnacle Cup V", "00 Nation").
+champion("Tim Ångström", "DreamHack Summer 2023 BYOC", "LILFAM").
+champion("Tim Ångström", "Subway Suberior League Season 1", "ztrfanclub").
+champion("Tim Ångström", "Prime League Season 3: Sweden", "Lemondogs").
+champion("Tim Ångström", "Esportal Truecaller Tournament", "sftsaftm").
+champion("Tim Ångström", "ESEA Season 38: Main Division - Europe", "X-Gamer").
+vice("Tim Ångström", "Svenska Elitserien Spring 2022", "Young Ninjas").
+vice("Tim Ångström", "Svenska Elitserien Fall 2021", "X-Gamer").
+
+
+nick("Ahmed Abdi", "abdi").
+entry_year("Ahmed Abdi", 2016).
+image("Ahmed Abdi", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
+                     
+age("Ahmed Abdi", 33).
+birth_month("Ahmed Abdi", "December").
+birth_year("Ahmed Abdi", 1990).
+birth_day("Ahmed Abdi", 29).
+current_team("Ahmed Abdi", "Metizport").
+nationality("Ahmed Abdi", "Sweden").
+former_team("Ahmed Abdi", "Prima eSport").
+former_team("Ahmed Abdi", "Prima eSport").
+former_team("Ahmed Abdi", "Granit Gaming").
+former_team("Ahmed Abdi", "IWNL").
+former_team("Ahmed Abdi", "Young Ninjas").
+former_team("Ahmed Abdi", "Metizport").
+role("Ahmed Abdi", "Coach").
+champion("Ahmed Abdi", "Thunderpick Bitcoin Series #2", "Young Ninjas").
+champion("Ahmed Abdi", "Svenska Elitserien Fall 2020", "Tikitakan").
+
+
 nick("Bo Fredrik Sterner", "REZ").
 entry_year("Bo Fredrik Sterner", 2015).
+image("Bo Fredrik Sterner", "https://liquipedia.net/commons/images/thumb/b/b4/REZ_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-REZ_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Bo Fredrik Sterner", 26).
 birth_month("Bo Fredrik Sterner", "January").
@@ -149,6 +327,7 @@ vice("Bo Fredrik Sterner", "Intel Extreme Masters XVI - Winter", "Ninjas in Pyja
 
 nick("Alejandro Masanet Candela", "alex").
 entry_year("Alejandro Masanet Candela", 2013).
+image("Alejandro Masanet Candela", "https://liquipedia.net/commons/images/thumb/d/d5/ALEX_at_CCT_Central_Europe_Malta_Finals.jpg/600px-ALEX_at_CCT_Central_Europe_Malta_Finals.jpg").
                      
 age("Alejandro Masanet Candela", 28).
 birth_month("Alejandro Masanet Candela", "December").
@@ -180,8 +359,48 @@ champion("Alejandro Masanet Candela", "ESL Masters España 2017 - Season 2", "Mo
 champion("Alejandro Masanet Candela", "ESL Masters España - 2017 Season 1", "KPI Gaming").
 
 
+nick("Richard Landström", "Xizt").
+entry_year("Richard Landström", 2008).
+image("Richard Landström", "https://liquipedia.net/commons/images/thumb/4/46/Xizt_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Xizt_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
+                     
+age("Richard Landström", 33).
+birth_month("Richard Landström", "February").
+birth_year("Richard Landström", 1991).
+birth_day("Richard Landström", 22).
+current_team("Richard Landström", "Ninjas in Pyjamas").
+nationality("Richard Landström", "Sweden").
+former_team("Richard Landström", "Laget").
+former_team("Richard Landström", "Begrip").
+former_team("Richard Landström", "H2k Gaming").
+former_team("Richard Landström", "LIONS").
+former_team("Richard Landström", "Fnatic").
+former_team("Richard Landström", "Ninjas in Pyjamas").
+former_team("Richard Landström", "NiP").
+former_team("Richard Landström", "FaZe Clan").
+former_team("Richard Landström", "Fnatic").
+former_team("Richard Landström", "Fnatic").
+former_team("Richard Landström", "Dignitas").
+former_team("Richard Landström", "Dignitas").
+former_team("Richard Landström", "Heroic").
+former_team("Richard Landström", "Heroic").
+former_team("Richard Landström", "Heroic").
+former_team("Richard Landström", "Ninjas in Pyjamas").
+role("Richard Landström", "Coach").
+champion("Richard Landström", "PLG Grand Slam 2018", "Fnatic").
+champion("Richard Landström", "Intel Extreme Masters XIII - Sydney", "FaZe Clan").
+champion("Richard Landström", "Intel Extreme Masters XII - Oakland", "Ninjas in Pyjamas").
+champion("Richard Landström", "DreamHack Open Valencia 2017", "Ninjas in Pyjamas").
+champion("Richard Landström", "Intel Extreme Masters XI - Oakland", "Ninjas in Pyjamas").
+champion("Richard Landström", "StarLadder i-League StarSeries Season 2", "Ninjas in Pyjamas").
+champion("Richard Landström", "DreamHack Masters Malmö 2016", "Ninjas in Pyjamas").
+champion("Richard Landström", "ESL One: Cologne 2014", "Ninjas in Pyjamas").
+vice("Richard Landström", "StarSeries & i-League CS:GO Season 7", "Fnatic").
+vice("Richard Landström", "DreamHack Winter 2014", "Ninjas in Pyjamas").
+
+
 nick("Alexander Givskov", "Altekz").
 entry_year("Alexander Givskov", 2018).
+image("Alexander Givskov", "https://liquipedia.net/commons/images/thumb/4/4c/Altekz_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Altekz_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Alexander Givskov", 20).
 birth_month("Alexander Givskov", "July").
@@ -207,6 +426,7 @@ vice("Alexander Givskov", "Brazy Party", "Astralis").
 
 nick("Thomas Bundsbæk", "TMB").
 entry_year("Thomas Bundsbæk", 2017).
+image("Thomas Bundsbæk", "https://liquipedia.net/commons/images/thumb/2/25/TMB_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-TMB_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Thomas Bundsbæk", 22).
 birth_month("Thomas Bundsbæk", "February").
@@ -241,6 +461,7 @@ champion("Thomas Bundsbæk", "United Masters League Season 2", "Copenhagen Flame
 
 nick("Ismail Ali", "refrezh").
 entry_year("Ismail Ali", 2016).
+image("Ismail Ali", "https://liquipedia.net/commons/images/thumb/9/94/Refrezh_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Refrezh_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Ismail Ali", 26).
 birth_month("Ismail Ali", "February").
@@ -283,6 +504,7 @@ champion("Ismail Ali", "DreamHack Open Summer 2019", "OpTic Gaming").
 
 nick("Fredrik Røj Christensen", "roeJ").
 entry_year("Fredrik Røj Christensen", 2017).
+image("Fredrik Røj Christensen", "https://liquipedia.net/commons/images/thumb/3/3d/RoeJ_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-RoeJ_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Fredrik Røj Christensen", 30).
 birth_month("Fredrik Røj Christensen", "November").
@@ -314,6 +536,7 @@ vice("Fredrik Røj Christensen", "DreamHack Open Winter 2019", "Tricked Esport")
 
 nick("Peter Rothmann Rasmussen", "dupreeh").
 entry_year("Peter Rothmann Rasmussen", 2012).
+image("Peter Rothmann Rasmussen", "https://liquipedia.net/commons/images/thumb/c/ce/Dupreeh_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Dupreeh_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Peter Rothmann Rasmussen", 30).
 birth_month("Peter Rothmann Rasmussen", "March").
@@ -350,6 +573,7 @@ champion("Peter Rothmann Rasmussen", "Esports Championship Series Season 2 - Fin
 
 nick("Daniel Vorborg", "Vorborg").
 entry_year("Daniel Vorborg", 2019).
+image("Daniel Vorborg", "https://liquipedia.net/commons/images/thumb/2/23/Vorborg_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Vorborg_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Daniel Vorborg", 31).
 birth_month("Daniel Vorborg", "June").
@@ -375,6 +599,7 @@ vice("Daniel Vorborg", "Qi Banja Luka 2019", "Copenhagen Flames").
 
 nick("Mathias Carlsen", "PR1mE").
 entry_year("Mathias Carlsen", 2017).
+image("Mathias Carlsen", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Mathias Carlsen", 22).
 birth_month("Mathias Carlsen", "May").
@@ -407,6 +632,7 @@ vice("Mathias Carlsen", "Global Offensive Champions League Season 2", "Tricked E
 
 nick("Mikkel Borlund", "n1Xen").
 entry_year("Mikkel Borlund", 2018).
+image("Mikkel Borlund", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Mikkel Borlund", 20).
 birth_month("Mikkel Borlund", "October").
@@ -429,6 +655,7 @@ vice("Mikkel Borlund", "Spring Sweet Spring #1", "Astralis Talent").
 
 nick("Johannes Borup", "b0RUP").
 entry_year("Johannes Borup", 2015).
+image("Johannes Borup", "https://liquipedia.net/commons/images/thumb/0/00/B0RUP_at_IEM_Cologne_2023.jpg/600px-B0RUP_at_IEM_Cologne_2023.jpg").
                      
 age("Johannes Borup", 24).
 birth_month("Johannes Borup", "September").
@@ -468,6 +695,7 @@ vice("Johannes Borup", "Good Game League 2019", "Tricked Esport").
 
 nick("Nikolaj Kristensen", "Error").
 entry_year("Nikolaj Kristensen", 2015).
+image("Nikolaj Kristensen", "https://liquipedia.net/commons/images/thumb/0/06/Niko_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Niko_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Nikolaj Kristensen", 25).
 birth_month("Nikolaj Kristensen", "May").
@@ -511,6 +739,7 @@ vice("Nikolaj Kristensen", "cs_summit 3", "OpTic Gaming").
 
 nick("Nicolai Petersen", "HUNDEN").
 entry_year("Nicolai Petersen", 2009).
+image("Nicolai Petersen", "https://liquipedia.net/commons/images/thumb/5/53/HUNDEN_%40_IEM_Katowice_2020.jpg/600px-HUNDEN_%40_IEM_Katowice_2020.jpg").
                      
 age("Nicolai Petersen", 32).
 birth_month("Nicolai Petersen", "June").
@@ -566,6 +795,7 @@ vice("Nicolai Petersen", "Good Game League 2019", "Tricked Esport").
 
 nick("Paweł Mocek", "innocent").
 entry_year("Paweł Mocek", 2011).
+image("Paweł Mocek", "https://liquipedia.net/commons/images/thumb/4/44/Innocent_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Innocent_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Paweł Mocek", 30).
 birth_month("Paweł Mocek", "December").
@@ -614,6 +844,7 @@ vice("Paweł Mocek", "The World Championships 2015", "Team Poland").
 
 nick("Mikkel Sparvath", "Maze").
 entry_year("Mikkel Sparvath", 2015).
+image("Mikkel Sparvath", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Mikkel Sparvath", 22).
 birth_month("Mikkel Sparvath", "June").
@@ -649,6 +880,7 @@ vice("Mikkel Sparvath", "NumberOne Season 2: Legend Stage 4", "Ambush Esport").
 
 nick("Vladan Mandić", "Kind0").
 entry_year("Vladan Mandić", 2020).
+image("Vladan Mandić", "https://liquipedia.net/commons/images/thumb/0/00/Kind0_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Kind0_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Vladan Mandić", 22).
 birth_month("Vladan Mandić", "January").
@@ -673,6 +905,7 @@ vice("Vladan Mandić", "OFK BGD Esports Series #1", "ex-iNation").
 
 nick("Sebastian Tauson Lindelof", "Tauson").
 entry_year("Sebastian Tauson Lindelof", 2020).
+image("Sebastian Tauson Lindelof", "https://liquipedia.net/commons/images/8/8a/Sprout_Tauson_2023.png").
                      
 age("Sebastian Tauson Lindelof", 18).
 birth_month("Sebastian Tauson Lindelof", "August").
@@ -702,6 +935,7 @@ vice("Sebastian Tauson Lindelof", "Gamebox Invitational 2023", "MASONIC").
 
 nick("Guy Trachtman", "anarkez").
 entry_year("Guy Trachtman", 2016).
+image("Guy Trachtman", "https://liquipedia.net/commons/images/d/d8/Anarkez_at_EEF_European_Championship_2022.png").
                      
 age("Guy Trachtman", 24).
 birth_month("Guy Trachtman", "November").
@@ -735,6 +969,7 @@ vice("Guy Trachtman", "MČR 2023", "Dynamo Eclot").
 
 nick("Benjamin Stabell", "cube").
 entry_year("Benjamin Stabell", 2011).
+image("Benjamin Stabell", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Benjamin Stabell", 28).
 birth_month("Benjamin Stabell", "March").
@@ -762,6 +997,7 @@ vice("Benjamin Stabell", "Copenhagen Games 2011: Source", "Dynamates").
 
 nick("Rasmus Steensborg", "raalz").
 entry_year("Rasmus Steensborg", 2010).
+image("Rasmus Steensborg", "https://liquipedia.net/commons/images/8/8a/Sprout_raalz_2023.png").
                      
 age("Rasmus Steensborg", 28).
 birth_month("Rasmus Steensborg", "July").
@@ -808,6 +1044,7 @@ champion("Rasmus Steensborg", "ESL Meisterschaft: Autumn 2021", "Sprout").
 
 nick("Jan Dyl", "cej0t").
 entry_year("Jan Dyl", 2022).
+image("Jan Dyl", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Jan Dyl", 17).
 birth_month("Jan Dyl", "February").
@@ -834,6 +1071,7 @@ vice("Jan Dyl", "Polska Liga Esportowa 2022: Dywizja Pretendentów", "AVEZ").
 
 nick("Anton Huynh", "Anlelele").
 entry_year("Anton Huynh", 2019).
+image("Anton Huynh", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Anton Huynh", 23).
 birth_month("Anton Huynh", "October").
@@ -863,6 +1101,7 @@ vice("Anton Huynh", "Energive Cup", "MASONIC").
 
 nick("Danny Krüger", "BERRY").
 entry_year("Danny Krüger", 2009).
+image("Danny Krüger", "https://liquipedia.net/commons/images/9/96/Sprout_BERRY_2023.png").
                      
 age("Danny Krüger", 33).
 birth_month("Danny Krüger", "March").
@@ -921,6 +1160,7 @@ vice("Danny Krüger", "DreamHack Bucharest 2012", "Anexis eSports").
 
 nick("Bjørnar Fauske Røn", "bfr").
 entry_year("Bjørnar Fauske Røn", 2018).
+image("Bjørnar Fauske Røn", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Bjørnar Fauske Røn", 22).
 birth_month("Bjørnar Fauske Røn", "December").
@@ -943,6 +1183,7 @@ vice("Bjørnar Fauske Røn", "Vestlan Virtual 2020", "Bergråttorna").
 
 nick("Jon Erik Øygarden", "ztk").
 entry_year("Jon Erik Øygarden", 2015).
+image("Jon Erik Øygarden", "https://liquipedia.net/commons/images/a/ab/Ztk_at_EEF_European_Championship_2022.png").
                      
 age("Jon Erik Øygarden", 28).
 birth_month("Jon Erik Øygarden", "November").
@@ -971,6 +1212,7 @@ vice("Jon Erik Øygarden", "Telialigaen Fall 2022", "Wizard esports").
 
 nick("Daniel Jensen", "zykes").
 entry_year("Daniel Jensen", 2017).
+image("Daniel Jensen", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Daniel Jensen", 23).
 birth_month("Daniel Jensen", "July").
@@ -996,200 +1238,9 @@ vice("Daniel Jensen", "Telialigaen Fall 2022", "Wizard esports").
 vice("Daniel Jensen", "Telialigaen - Spring 2020", "Riddle Esports").
 
 
-nick("André Gil", "Ag1l").
-entry_year("André Gil", 2019).
-                     
-age("André Gil", 21).
-birth_month("André Gil", "March").
-birth_year("André Gil", 2003).
-birth_day("André Gil", 2).
-current_team("André Gil", "For The Win Esports").
-nationality("André Gil", "Portugal").
-former_team("André Gil", "Rhyno Esports").
-former_team("André Gil", "eXploit Esports").
-former_team("André Gil", "For The Win Esports").
-role("André Gil", "Rifler").
-champion("André Gil", "Master League Portugal Season 13", "For The Win Esports").
-champion("André Gil", "Aveiro Techdays Cup 2023", "For The Win Esports").
-champion("André Gil", "Circuito Retake Season 5", "For The Win Esports").
-champion("André Gil", "Master League Portugal Season 9", "For The Win Esports").
-champion("André Gil", "ESL Masters España Season 11", "For The Win Esports").
-champion("André Gil", "ESEA Season 40: Main Division - Europe", "For The Win Esports").
-champion("André Gil", "NumberOne Season 2: Finals", "For The Win Esports").
-vice("André Gil", "ESL Masters España Season 13", "For The Win Esports").
-vice("André Gil", "Master League Portugal Season 10", "For The Win Esports").
-
-
-nick("Filipe André Azevedo Dias", "NOPEEj").
-entry_year("Filipe André Azevedo Dias", 2017).
-                     
-age("Filipe André Azevedo Dias", 22).
-birth_month("Filipe André Azevedo Dias", "November").
-birth_year("Filipe André Azevedo Dias", 2001).
-birth_day("Filipe André Azevedo Dias", 8).
-current_team("Filipe André Azevedo Dias", "For The Win Esports").
-nationality("Filipe André Azevedo Dias", "Portugal").
-former_team("Filipe André Azevedo Dias", "Panthers Stars").
-former_team("Filipe André Azevedo Dias", "Panthers eSports").
-former_team("Filipe André Azevedo Dias", "Team HD").
-former_team("Filipe André Azevedo Dias", "Defining Stars").
-former_team("Filipe André Azevedo Dias", "Team HD").
-former_team("Filipe André Azevedo Dias", "For The Win Esports").
-former_team("Filipe André Azevedo Dias", "eXploit Esports").
-former_team("Filipe André Azevedo Dias", "Giants Gaming").
-former_team("Filipe André Azevedo Dias", "OFFSET Esports").
-former_team("Filipe André Azevedo Dias", "SQUAD").
-former_team("Filipe André Azevedo Dias", "Fourteen Esports").
-former_team("Filipe André Azevedo Dias", "GTZ.ESPORTS").
-former_team("Filipe André Azevedo Dias", "For The Win Esports").
-role("Filipe André Azevedo Dias", "Rifler").
-champion("Filipe André Azevedo Dias", "Master League Portugal Season 13", "For The Win Esports").
-champion("Filipe André Azevedo Dias", "Aveiro Techdays Cup 2023", "For The Win Esports").
-champion("Filipe André Azevedo Dias", "Circuito Retake Season 3", "OFFSET Esports").
-champion("Filipe André Azevedo Dias", "Master League Portugal Season 8", "OFFSET Esports").
-champion("Filipe André Azevedo Dias", "Liga Portuguesa: Grand Final 2019", "eXploit Esports").
-champion("Filipe André Azevedo Dias", "Liga Portuguesa Summer 2019 - Division 1 Finals", "eXploit Esports").
-vice("Filipe André Azevedo Dias", "ESL Masters España Season 13", "For The Win Esports").
-vice("Filipe André Azevedo Dias", "Master League Portugal Season 7", "OFFSET Esports").
-vice("Filipe André Azevedo Dias", "Master League Portugal Season 6", "Giants Gaming").
-vice("Filipe André Azevedo Dias", "Master League Portugal Season 5", "Giants Gaming").
-
-
-nick("Paulo Ricardo Lopes da Silva", "pr").
-entry_year("Paulo Ricardo Lopes da Silva", 2017).
-                     
-age("Paulo Ricardo Lopes da Silva", 23).
-birth_month("Paulo Ricardo Lopes da Silva", "October").
-birth_year("Paulo Ricardo Lopes da Silva", 2000).
-birth_day("Paulo Ricardo Lopes da Silva", 2).
-current_team("Paulo Ricardo Lopes da Silva", "For The Win Esports").
-nationality("Paulo Ricardo Lopes da Silva", "Portugal").
-former_team("Paulo Ricardo Lopes da Silva", "Panthers eSports").
-former_team("Paulo Ricardo Lopes da Silva", "HEXAGONE eSports").
-former_team("Paulo Ricardo Lopes da Silva", "OFFSET Esports").
-former_team("Paulo Ricardo Lopes da Silva", "For The Win Esports").
-former_team("Paulo Ricardo Lopes da Silva", "OFFSET Esports").
-former_team("Paulo Ricardo Lopes da Silva", "eXploit Esports").
-former_team("Paulo Ricardo Lopes da Silva", "Giants Gaming").
-former_team("Paulo Ricardo Lopes da Silva", "OFFSET Esports").
-former_team("Paulo Ricardo Lopes da Silva", "eXploit Esports").
-former_team("Paulo Ricardo Lopes da Silva", "SQUAD").
-former_team("Paulo Ricardo Lopes da Silva", "Fourteen Esports").
-former_team("Paulo Ricardo Lopes da Silva", "ex-Fourteen Esports").
-former_team("Paulo Ricardo Lopes da Silva", "GTZ.ESPORTS").
-former_team("Paulo Ricardo Lopes da Silva", "For The Win Esports").
-role("Paulo Ricardo Lopes da Silva", "Rifler").
-champion("Paulo Ricardo Lopes da Silva", "Master League Portugal Season 13", "For The Win Esports").
-champion("Paulo Ricardo Lopes da Silva", "Aveiro Techdays Cup 2023", "For The Win Esports").
-champion("Paulo Ricardo Lopes da Silva", "Circuito Retake Season 6", "GTZ.ESPORTS").
-champion("Paulo Ricardo Lopes da Silva", "ESL Masters España Season 6", "OFFSET Esports").
-champion("Paulo Ricardo Lopes da Silva", "ESL Masters España Season 5", "OFFSET Esports").
-champion("Paulo Ricardo Lopes da Silva", "Master League Portugal Season 3", "OFFSET Esports").
-champion("Paulo Ricardo Lopes da Silva", "Worten Game Ring Invitational", "OFFSET Esports").
-champion("Paulo Ricardo Lopes da Silva", "XF Braga Cup 2019", "OFFSET Esports").
-champion("Paulo Ricardo Lopes da Silva", "Liga Portuguesa Spring 2019 - Division 1 Finals", "OFFSET Esports").
-champion("Paulo Ricardo Lopes da Silva", "Worten Game Ring - Rock in Rio 2018", "OFFSET Esports").
-
-
-nick("Rafael Faria Ferreira", "rafaxF").
-entry_year("Rafael Faria Ferreira", 2019).
-                     
-age("Rafael Faria Ferreira", 22).
-birth_month("Rafael Faria Ferreira", "March").
-birth_year("Rafael Faria Ferreira", 2001).
-birth_day("Rafael Faria Ferreira", 16).
-captain("Rafael Faria Ferreira", "For The Win Esports").
-current_team("Rafael Faria Ferreira", "For The Win Esports").
-nationality("Rafael Faria Ferreira", "Portugal").
-former_team("Rafael Faria Ferreira", "XF Iberia Esports").
-former_team("Rafael Faria Ferreira", "PRoNetAgEm").
-former_team("Rafael Faria Ferreira", "Galatics Esports Club").
-former_team("Rafael Faria Ferreira", "GTZ Bulls Esports").
-former_team("Rafael Faria Ferreira", "OFFSET Esports").
-former_team("Rafael Faria Ferreira", "GTZ Bulls Esports").
-former_team("Rafael Faria Ferreira", "SAW Youngsters").
-former_team("Rafael Faria Ferreira", "ex-SAW Youngsters").
-former_team("Rafael Faria Ferreira", "GTZ Bulls Esports").
-former_team("Rafael Faria Ferreira", "GTZ.ESPORTS").
-former_team("Rafael Faria Ferreira", "Deuses do Dom").
-former_team("Rafael Faria Ferreira", "Make Your Destiny").
-former_team("Rafael Faria Ferreira", "GTZ.ESPORTS").
-former_team("Rafael Faria Ferreira", "ex-Make Your Destiny").
-former_team("Rafael Faria Ferreira", "Los Alpacas").
-former_team("Rafael Faria Ferreira", "For The Win Esports").
-role("Rafael Faria Ferreira", "In-game leader").
-role("Rafael Faria Ferreira", "AWPer").
-champion("Rafael Faria Ferreira", "Master League Portugal Season 13", "For The Win Esports").
-champion("Rafael Faria Ferreira", "Circuito Retake Season 6", "GTZ.ESPORTS").
-champion("Rafael Faria Ferreira", "Famalicão Extreme Gaming 2023", "GTZ.ESPORTS").
-champion("Rafael Faria Ferreira", "Óbidos Kings Cup", "GTZ.ESPORTS").
-champion("Rafael Faria Ferreira", "Magicshot Techdays Cup 2021", "SAW Youngsters").
-vice("Rafael Faria Ferreira", "ESEA Season 45: Main Division - Europe", "GTZ.ESPORTS").
-vice("Rafael Faria Ferreira", "SiGMA Esports Cup Malta 2021", "SAW Youngsters").
-vice("Rafael Faria Ferreira", "LVP Assault Division 2020", "GTZ Bulls Esports").
-
-
-nick("António Barbosa", "aragornN").
-entry_year("António Barbosa", 2020).
-                     
-age("António Barbosa", 21).
-birth_month("António Barbosa", "May").
-birth_year("António Barbosa", 2002).
-birth_day("António Barbosa", 23).
-current_team("António Barbosa", "For The Win Esports").
-nationality("António Barbosa", "Portugal").
-former_team("António Barbosa", "Rhyno Esports").
-former_team("António Barbosa", "GTZ.ESPORTS").
-former_team("António Barbosa", "ex-Make Your Destiny").
-former_team("António Barbosa", "Los Alpacas").
-former_team("António Barbosa", "SAW").
-former_team("António Barbosa", "For The Win Esports").
-role("António Barbosa", "Rifler").
-champion("António Barbosa", "Master League Portugal Season 13", "For The Win Esports").
-champion("António Barbosa", "ESL Challenger League Season 46: Europe", "SAW").
-champion("António Barbosa", "Circuito Retake Season 6", "GTZ.ESPORTS").
-champion("António Barbosa", "Famalicão Extreme Gaming 2023", "GTZ.ESPORTS").
-champion("António Barbosa", "Óbidos Kings Cup", "GTZ.ESPORTS").
-vice("António Barbosa", "ESEA Season 45: Main Division - Europe", "GTZ.ESPORTS").
-vice("António Barbosa", "Magicshot Leiria Cup 2022", "Rhyno Esports").
-
-
-nick("Rui Soares", "vts").
-entry_year("Rui Soares", 2016).
-                     
-age("Rui Soares", 31).
-birth_month("Rui Soares", "February").
-birth_year("Rui Soares", 1993).
-birth_day("Rui Soares", 4).
-current_team("Rui Soares", "For The Win Esports").
-nationality("Rui Soares", "Portugal").
-former_team("Rui Soares", "For The Win eSports").
-former_team("Rui Soares", "Team Império Multimédia").
-former_team("Rui Soares", "For The Win eSports").
-former_team("Rui Soares", "Exotic Island").
-former_team("Rui Soares", "k1ck eSports Club").
-former_team("Rui Soares", "ASP Esports").
-former_team("Rui Soares", "EGN Esports").
-former_team("Rui Soares", "ex-EGN Esports").
-former_team("Rui Soares", "ASP Esports").
-former_team("Rui Soares", "For The Win Esports").
-former_team("Rui Soares", "eXploit").
-former_team("Rui Soares", "eXploit Esports").
-former_team("Rui Soares", "Baecon Gaming Group").
-former_team("Rui Soares", "GameAgents").
-former_team("Rui Soares", "SAW Youngsters").
-former_team("Rui Soares", "SAW").
-former_team("Rui Soares", "SAW").
-former_team("Rui Soares", "FTW Esports").
-role("Rui Soares", "Coach").
-champion("Rui Soares", "Master League Portugal Season 6", "Baecon Gaming Group").
-champion("Rui Soares", "Go4CS:GO Portugal February 2019 Finals", "ehehxd").
-vice("Rui Soares", "Circuito Retake Season 1", "Baecon Gaming Group").
-vice("Rui Soares", "Go4CS:GO Portugal December 2018 Finals", "ehehxd").
-
-
 nick("Bráulio Piraglia", "brA").
 entry_year("Bráulio Piraglia", 2007).
+image("Bráulio Piraglia", "https://liquipedia.net/commons/images/thumb/a/a6/BrA.jpg/600px-BrA.jpg").
                      
 age("Bráulio Piraglia", 32).
 birth_month("Bráulio Piraglia", "April").
@@ -1226,6 +1277,7 @@ vice("Bráulio Piraglia", "Galatics Winter Games Xmas Cup 2018", "Baecon Gaming 
 
 nick("Tiago Martins", "TMKj").
 entry_year("Tiago Martins", 2022).
+image("Tiago Martins", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Tiago Martins", 18).
 birth_month("Tiago Martins", "November").
@@ -1251,6 +1303,7 @@ vice("Tiago Martins", "Dream League Portugal Season 4", "Rhyno Youngsters").
 
 nick("Diogo Dias", "DDias").
 entry_year("Diogo Dias", 2019).
+image("Diogo Dias", "https://liquipedia.net/commons/images/thumb/2/2d/DDias_at_Master_League_Portugal_Season_8.jpg/600px-DDias_at_Master_League_Portugal_Season_8.jpg").
                      
 age("Diogo Dias", 25).
 birth_month("Diogo Dias", "July").
@@ -1281,6 +1334,7 @@ vice("Diogo Dias", "Master League Portugal Season 8", "For The Win Esports").
 
 nick("Diogo Rodrigues", "snapy").
 entry_year("Diogo Rodrigues", 2018).
+image("Diogo Rodrigues", "https://liquipedia.net/commons/images/thumb/d/d2/Snapy_at_Master_League_Portugal_Season_8.jpg/600px-Snapy_at_Master_League_Portugal_Season_8.jpg").
                      
 age("Diogo Rodrigues", 22).
 birth_month("Diogo Rodrigues", "September").
@@ -1317,6 +1371,7 @@ vice("Diogo Rodrigues", "Master League Portugal Season 7", "OFFSET Esports").
 
 nick("Renato Alberto Reixa Lourenço Gonçalves", "renatoohaxx").
 entry_year("Renato Alberto Reixa Lourenço Gonçalves", 2016).
+image("Renato Alberto Reixa Lourenço Gonçalves", "https://liquipedia.net/commons/images/thumb/3/37/Renatoohaxx.jpg/600px-Renatoohaxx.jpg").
                      
 age("Renato Alberto Reixa Lourenço Gonçalves", 28).
 birth_month("Renato Alberto Reixa Lourenço Gonçalves", "November").
@@ -1358,6 +1413,7 @@ vice("Renato Alberto Reixa Lourenço Gonçalves", "Master League Portugal Season
 
 nick("Francisco Ramos", "obj").
 entry_year("Francisco Ramos", 2015).
+image("Francisco Ramos", "https://liquipedia.net/commons/images/thumb/9/91/Obj_Moche_XL_Esports_2019.jpg/600px-Obj_Moche_XL_Esports_2019.jpg").
                      
 age("Francisco Ramos", 28).
 birth_month("Francisco Ramos", "September").
@@ -1395,6 +1451,7 @@ champion("Francisco Ramos", "4Gamers Masters Porto 2017", "Team Alientech").
 
 nick("Christopher Fernandes", "MUTiRiS").
 entry_year("Christopher Fernandes", 2009).
+image("Christopher Fernandes", "https://liquipedia.net/commons/images/thumb/d/d6/MUTiRiS_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-MUTiRiS_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Christopher Fernandes", 31).
 birth_month("Christopher Fernandes", "December").
@@ -1435,6 +1492,7 @@ vice("Christopher Fernandes", "DreamHack Open December 2020", "sAw").
 
 nick("Ricardo Oliveira", "rmn").
 entry_year("Ricardo Oliveira", 2010).
+image("Ricardo Oliveira", "https://liquipedia.net/commons/images/thumb/0/06/Rmn_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Rmn_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Ricardo Oliveira", 31).
 birth_month("Ricardo Oliveira", "May").
@@ -1467,6 +1525,7 @@ vice("Ricardo Oliveira", "DreamHack Open December 2020", "sAw").
 
 nick("Michel Magalhães", "ewjerkz").
 entry_year("Michel Magalhães", 2020).
+image("Michel Magalhães", "https://liquipedia.net/commons/images/thumb/8/8b/Ewjerkz_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Ewjerkz_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Michel Magalhães", 23).
 birth_month("Michel Magalhães", "September").
@@ -1493,6 +1552,7 @@ champion("Michel Magalhães", "ESL Masters España Season 11", "For The Win Espo
 
 nick("João Vieira", "story").
 entry_year("João Vieira", 2019).
+image("João Vieira", "https://liquipedia.net/commons/images/thumb/8/88/Story_at_Rio_Major_2022_EU_RMR.jpg/600px-Story_at_Rio_Major_2022_EU_RMR.jpg").
                      
 age("João Vieira", 21).
 birth_month("João Vieira", "April").
@@ -1523,6 +1583,7 @@ champion("João Vieira", "ESL Masters España Season 11", "For The Win Esports")
 
 nick("Rafael Wing", "arrozdoce").
 entry_year("Rafael Wing", 2019).
+image("Rafael Wing", "https://liquipedia.net/commons/images/thumb/e/e1/Arrozdoce_at_Master_League_Portugal_Season_8.jpg/600px-Arrozdoce_at_Master_League_Portugal_Season_8.jpg").
                      
 age("Rafael Wing", 21).
 birth_month("Rafael Wing", "July").
@@ -1553,6 +1614,7 @@ vice("Rafael Wing", "CCT North Europe Series #6", "SAW").
 
 nick("Daniel Brito", "NABOWOW").
 entry_year("Daniel Brito", 2011).
+image("Daniel Brito", "https://liquipedia.net/commons/images/thumb/7/7b/NABOWOW_at_Liga_Portuguesa_Spring_2020.jpg/600px-NABOWOW_at_Liga_Portuguesa_Spring_2020.jpg").
                      
 age("Daniel Brito", 28).
 birth_month("Daniel Brito", "April").
@@ -1582,6 +1644,7 @@ vice("Daniel Brito", "Master League Portugal Season 8", "For The Win Esports").
 
 nick("Denislav Dimitrov Dimitrov", "dennyslaw").
 entry_year("Denislav Dimitrov Dimitrov", 2018).
+image("Denislav Dimitrov Dimitrov", "https://liquipedia.net/commons/images/thumb/d/d8/Dennyslaw_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Dennyslaw_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Denislav Dimitrov Dimitrov", 24).
 birth_month("Denislav Dimitrov Dimitrov", "November").
@@ -1608,6 +1671,7 @@ champion("Denislav Dimitrov Dimitrov", "Elisa Invitational Spring 2021", "SKADE"
 
 nick("Georgi Grigorov", "SHiPZ").
 entry_year("Georgi Grigorov", 2016).
+image("Georgi Grigorov", "https://liquipedia.net/commons/images/thumb/b/b8/SHiPZ_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-SHiPZ_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Georgi Grigorov", 23).
 birth_month("Georgi Grigorov", "August").
@@ -1644,6 +1708,7 @@ vice("Georgi Grigorov", "United Masters League Season 1", "Windigo Gaming").
 
 nick("Hristiyan Pironkov", "REDSTAR").
 entry_year("Hristiyan Pironkov", 2017).
+image("Hristiyan Pironkov", "https://liquipedia.net/commons/images/thumb/1/14/REDSTAR_at_BGE_Stara_Zagora.png/600px-REDSTAR_at_BGE_Stara_Zagora.png").
                      
 age("Hristiyan Pironkov", 22).
 birth_month("Hristiyan Pironkov", "August").
@@ -1672,6 +1737,7 @@ vice("Hristiyan Pironkov", "LOOT.BET/CS Season 9", "Team Fiend").
 
 nick("Aleks Ognyanov Petrov", "Rainwaker").
 entry_year("Aleks Ognyanov Petrov", 2017).
+image("Aleks Ognyanov Petrov", "https://liquipedia.net/commons/images/thumb/f/ff/Rainwaker_at_IEM_Cologne_2023.jpg/600px-Rainwaker_at_IEM_Cologne_2023.jpg").
                      
 age("Aleks Ognyanov Petrov", 22).
 birth_month("Aleks Ognyanov Petrov", "April").
@@ -1707,6 +1773,7 @@ champion("Aleks Ognyanov Petrov", "Elisa Invitational Spring 2021", "SKADE").
 
 nick("Denis Hristov", "Grashog").
 entry_year("Denis Hristov", 2018).
+image("Denis Hristov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Denis Hristov", 24).
 birth_month("Denis Hristov", "June").
@@ -1742,6 +1809,7 @@ vice("Denis Hristov", "Flashe Super Slam", "Pompa Team").
 
 nick("Kaloyan Popov", "POP0V").
 entry_year("Kaloyan Popov", 2018).
+image("Kaloyan Popov", "https://liquipedia.net/commons/images/thumb/7/7b/Ooredoo_POP0V_2022.png/600px-Ooredoo_POP0V_2022.png").
                      
 age("Kaloyan Popov", 26).
 birth_month("Kaloyan Popov", "December").
@@ -1772,6 +1840,7 @@ vice("Kaloyan Popov", "TippmixPro Masters 2021", "LinkDown").
 
 nick("Kamil Pietkun", "KEi").
 entry_year("Kamil Pietkun", 2018).
+image("Kamil Pietkun", "https://liquipedia.net/commons/images/thumb/5/5a/KEi_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-KEi_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Kamil Pietkun", 22).
 birth_month("Kamil Pietkun", "April").
@@ -1805,6 +1874,7 @@ vice("Kamil Pietkun", "ESEA Season 38: Premier Division - Europe", "Anonymo Espo
 
 nick("Wiktor Kruk", "mynio").
 entry_year("Wiktor Kruk", 2012).
+image("Wiktor Kruk", "https://liquipedia.net/commons/images/thumb/a/a8/Mynio_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Mynio_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Wiktor Kruk", 28).
 birth_month("Wiktor Kruk", "September").
@@ -1847,6 +1917,7 @@ vice("Wiktor Kruk", "Nine to Five #3", "Wisła Kraków").
 
 nick("Tomasz Uroda", "tomiko").
 entry_year("Tomasz Uroda", 2020).
+image("Tomasz Uroda", "https://liquipedia.net/commons/images/d/d9/Tomiko_9INE_2024.png").
                      
 age("Tomasz Uroda", 19).
 birth_month("Tomasz Uroda", "March").
@@ -1877,6 +1948,7 @@ champion("Tomasz Uroda", "Detektywi Rito Cup #2", "los kogutos").
 
 nick("Mikołaj Michałków", "miNIr0x").
 entry_year("Mikołaj Michałków", 2017).
+image("Mikołaj Michałków", "https://liquipedia.net/commons/images/8/85/MiNir0x_9INE_2024.png").
                      
 age("Mikołaj Michałków", 26).
 birth_month("Mikołaj Michałków", "August").
@@ -1901,6 +1973,7 @@ vice("Mikołaj Michałków", "China Top Shenzhen 2017", "AGO Gaming").
 
 nick("Tim Jonasson", "nawwk").
 entry_year("Tim Jonasson", 2015).
+image("Tim Jonasson", "https://liquipedia.net/commons/images/thumb/3/38/Nawwk_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Nawwk_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Tim Jonasson", 26).
 birth_month("Tim Jonasson", "October").
@@ -1931,6 +2004,7 @@ vice("Tim Jonasson", "Moche XL Esports 2019", "Team GamerLegion").
 
 nick("Joakim Myrbostad", "jkaem").
 entry_year("Joakim Myrbostad", 2013).
+image("Joakim Myrbostad", "https://liquipedia.net/commons/images/thumb/5/50/Jkaem_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Jkaem_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Joakim Myrbostad", 30).
 birth_month("Joakim Myrbostad", "February").
@@ -1966,6 +2040,7 @@ vice("Joakim Myrbostad", "Intel Extreme Masters XIV - Beijing", "100 Thieves").
 
 nick("Martin Styk", "STYKO").
 entry_year("Martin Styk", 2011).
+image("Martin Styk", "https://liquipedia.net/commons/images/thumb/9/93/STYKO_%40_BLAST_Paris_Major_2023.jpeg/600px-STYKO_%40_BLAST_Paris_Major_2023.jpeg").
                      
 age("Martin Styk", 28).
 birth_month("Martin Styk", "February").
@@ -2013,6 +2088,7 @@ vice("Martin Styk", "Esports Championship Series Season 4 - Finals", "mousesport
 
 nick("Aleksandar Kjulukoski", "CacaNito").
 entry_year("Aleksandar Kjulukoski", 2019).
+image("Aleksandar Kjulukoski", "https://liquipedia.net/commons/images/thumb/b/bb/CacaNito_at_IEM_Katowice_2024.jpg/600px-CacaNito_at_IEM_Katowice_2024.jpg").
                      
 age("Aleksandar Kjulukoski", 23).
 birth_month("Aleksandar Kjulukoski", "November").
@@ -2039,6 +2115,7 @@ vice("Aleksandar Kjulukoski", "Funspark ULTI 2021: European Playoffs #2", "BLUEJ
 
 nick("Ådne Fredriksen", "sense").
 entry_year("Ådne Fredriksen", 2018).
+image("Ådne Fredriksen", "https://liquipedia.net/commons/images/thumb/d/d2/Sense_at_IEM_Katowice_2024.jpg/600px-Sense_at_IEM_Katowice_2024.jpg").
                      
 age("Ådne Fredriksen", 20).
 birth_month("Ådne Fredriksen", "September").
@@ -2066,6 +2143,7 @@ vice("Ådne Fredriksen", "Fragadelphia 16", "Apeks Rebels").
 
 nick("Torbjørn Nyborg", "mithR").
 entry_year("Torbjørn Nyborg", 2013).
+image("Torbjørn Nyborg", "https://liquipedia.net/commons/images/thumb/8/83/MithR_at_IEM_Katowice_2024.jpg/600px-MithR_at_IEM_Katowice_2024.jpg").
                      
 age("Torbjørn Nyborg", 34).
 birth_month("Torbjørn Nyborg", "November").
@@ -2092,6 +2170,7 @@ champion("Torbjørn Nyborg", "DreamHack Masters Las Vegas 2017 - European Open Q
 
 nick("Artem Moroz", "r1nkle").
 entry_year("Artem Moroz", 2020).
+image("Artem Moroz", "https://liquipedia.net/commons/images/thumb/f/fe/R1nkle_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-R1nkle_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Artem Moroz", 19).
 birth_month("Artem Moroz", "October").
@@ -2115,6 +2194,7 @@ vice("Artem Moroz", "ESEA Season 38: Main Division - Europe", "B8").
 
 nick("Arsenyj Derevynskyj", "cptkurtka023").
 entry_year("Arsenyj Derevynskyj", 2018).
+image("Arsenyj Derevynskyj", "https://liquipedia.net/commons/images/thumb/4/4d/Cptkurtka023_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Cptkurtka023_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Arsenyj Derevynskyj", 24).
 birth_month("Arsenyj Derevynskyj", "July").
@@ -2137,6 +2217,7 @@ vice("Arsenyj Derevynskyj", "Binance Super Cup", "The Incas").
 
 nick("Mykhajlo Lymar", "OWNER").
 entry_year("Mykhajlo Lymar", 2020).
+image("Mykhajlo Lymar", "https://liquipedia.net/commons/images/thumb/f/f1/B8_OWNER_2021.png/600px-B8_OWNER_2021.png").
                      
 age("Mykhajlo Lymar", 21).
 birth_month("Mykhajlo Lymar", "January").
@@ -2165,6 +2246,7 @@ vice("Mykhajlo Lymar", "ESEA Season 38: Main Division - Europe", "B8").
 
 nick("Andrij Kukharsjkyj", "Error").
 entry_year("Andrij Kukharsjkyj", 2021).
+image("Andrij Kukharsjkyj", "https://liquipedia.net/commons/images/thumb/e/ea/Npl_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Npl_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Andrij Kukharsjkyj", 18).
 birth_month("Andrij Kukharsjkyj", "July").
@@ -2184,6 +2266,7 @@ champion("Andrij Kukharsjkyj", "ROG #StandWithUkraine Cup Summer 2022", "Natus V
 
 nick("Ivan Iordanidi", "Maddened").
 entry_year("Ivan Iordanidi", 2022).
+image("Ivan Iordanidi", "https://liquipedia.net/commons/images/thumb/5/59/Maddened_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Maddened_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Ivan Iordanidi", 23).
 birth_month("Ivan Iordanidi", "December").
@@ -2202,6 +2285,7 @@ vice("Ivan Iordanidi", "Elisa Invitational Fall 2022", "B8").
 
 nick("Erik Koncsok", "er9k").
 entry_year("Erik Koncsok", 2016).
+image("Erik Koncsok", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Erik Koncsok", 24).
 birth_month("Erik Koncsok", "March").
@@ -2229,6 +2313,7 @@ vice("Erik Koncsok", "Digital Warriors Season 1", "Békéscsabai E-Sport Egyesü
 
 nick("Vít Pohlot", "nbqq").
 entry_year("Vít Pohlot", 2018).
+image("Vít Pohlot", "https://liquipedia.net/commons/images/thumb/d/d9/Nbqq_2021_Sampi.jpg/600px-Nbqq_2021_Sampi.jpg").
                      
 age("Vít Pohlot", 26).
 birth_month("Vít Pohlot", "April").
@@ -2259,6 +2344,7 @@ vice("Vít Pohlot", "Tipsport Cup Prague 2022", "Dynamo Eclot").
 
 nick("Martin Handl", "Dytor").
 entry_year("Martin Handl", 2019).
+image("Martin Handl", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Martin Handl", 21).
 birth_month("Martin Handl", "January").
@@ -2290,6 +2376,7 @@ vice("Martin Handl", "Tipsport Cup Prague 2022", "Dynamo Eclot").
 
 nick("David Bílý", "forsyy").
 entry_year("David Bílý", 2018).
+image("David Bílý", "https://liquipedia.net/commons/images/thumb/3/3b/Forsyy_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Forsyy_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("David Bílý", 22).
 birth_month("David Bílý", "November").
@@ -2319,6 +2406,7 @@ vice("David Bílý", "Sazka eLEAGUE Fall 2021", "ENTERPRISE esports").
 
 nick("Raul Gligor", "Blytz").
 entry_year("Raul Gligor", 2016).
+image("Raul Gligor", "https://liquipedia.net/commons/images/3/38/ENTERPRISE_Blytz_2022.png").
                      
 age("Raul Gligor", 23).
 birth_month("Raul Gligor", "June").
@@ -2347,6 +2435,7 @@ vice("Raul Gligor", "Global Offensive Champions League Season 1", "ENTERPRISE es
 
 nick("Rasmus Johansson", "kreaz").
 entry_year("Rasmus Johansson", 2015).
+image("Rasmus Johansson", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Rasmus Johansson", 25).
 birth_month("Rasmus Johansson", "April").
@@ -2388,6 +2477,7 @@ vice("Rasmus Johansson", "Svenska Elitserien Fall 2020", "fightclub").
 
 nick("Pavel Vaněk", "replay").
 entry_year("Pavel Vaněk", 2020).
+image("Pavel Vaněk", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Pavel Vaněk", 22).
 birth_month("Pavel Vaněk", "July").
@@ -2408,6 +2498,7 @@ champion("Pavel Vaněk", "Y-Games PRO Series 2021", "eEriness").
 
 nick("Paweł Dycha", "dycha").
 entry_year("Paweł Dycha", 2017).
+image("Paweł Dycha", "https://liquipedia.net/commons/images/thumb/c/c5/Dycha_at_IEM_Katowice_2024.jpg/600px-Dycha_at_IEM_Katowice_2024.jpg").
                      
 age("Paweł Dycha", 26).
 birth_month("Paweł Dycha", "August").
@@ -2437,6 +2528,7 @@ vice("Paweł Dycha", "ESL Pro League Season 15", "ENCE").
 
 nick("Lukas Egholm Rossander", "gla1ve").
 entry_year("Lukas Egholm Rossander", 2010).
+image("Lukas Egholm Rossander", "https://liquipedia.net/commons/images/thumb/a/a8/Gla1ve_at_IEM_Katowice_2024.jpg/600px-Gla1ve_at_IEM_Katowice_2024.jpg").
                      
 age("Lukas Egholm Rossander", 28).
 birth_month("Lukas Egholm Rossander", "June").
@@ -2490,6 +2582,7 @@ champion("Lukas Egholm Rossander", "Esports Championship Series Season 2 - Final
 
 nick("Krzysztof Górski", "Goofy").
 entry_year("Krzysztof Górski", 2017).
+image("Krzysztof Górski", "https://liquipedia.net/commons/images/thumb/3/30/Goofy_at_IEM_Katowice_2024.jpg/600px-Goofy_at_IEM_Katowice_2024.jpg").
                      
 age("Krzysztof Górski", 23).
 birth_month("Krzysztof Górski", "August").
@@ -2518,6 +2611,7 @@ champion("Krzysztof Górski", "Good Game League 2018", "x-kom Team").
 
 nick("Kacper Walukiewicz", "Kylar").
 entry_year("Kacper Walukiewicz", 2018).
+image("Kacper Walukiewicz", "https://liquipedia.net/commons/images/thumb/4/43/Kylar_at_IEM_Katowice_2024.jpg/600px-Kylar_at_IEM_Katowice_2024.jpg").
                      
 age("Kacper Walukiewicz", 24).
 birth_month("Kacper Walukiewicz", "September").
@@ -2545,6 +2639,7 @@ vice("Kacper Walukiewicz", "ESEA Season 38: Premier Division - Europe", "Anonymo
 
 nick("Aleksander Miskiewicz", "hades").
 entry_year("Aleksander Miskiewicz", 2018).
+image("Aleksander Miskiewicz", "https://liquipedia.net/commons/images/thumb/0/04/Hades_at_IEM_Katowice_2024.jpg/600px-Hades_at_IEM_Katowice_2024.jpg").
                      
 age("Aleksander Miskiewicz", 24).
 birth_month("Aleksander Miskiewicz", "January").
@@ -2579,6 +2674,7 @@ vice("Aleksander Miskiewicz", "Intel Extreme Masters XVI - Fall: Europe", "ENCE"
 
 nick("Jakub Gurczyński", "kuben").
 entry_year("Jakub Gurczyński", 2004).
+image("Jakub Gurczyński", "https://liquipedia.net/commons/images/thumb/8/89/Kuben_at_IEM_Katowice_2024.jpeg/600px-Kuben_at_IEM_Katowice_2024.jpeg").
                      
 age("Jakub Gurczyński", 35).
 birth_month("Jakub Gurczyński", "July").
@@ -2621,6 +2717,7 @@ champion("Jakub Gurczyński", "WSVG 2006: London", "Team Pentagram").
 
 nick("Wojciech Strzelczyk", "bajmi").
 entry_year("Wojciech Strzelczyk", 2021).
+image("Wojciech Strzelczyk", "https://liquipedia.net/commons/images/thumb/5/5d/ThunderFlash_Bajmi_2023.png/600px-ThunderFlash_Bajmi_2023.png").
                      
 age("Wojciech Strzelczyk", 21).
 birth_month("Wojciech Strzelczyk", "July").
@@ -2653,6 +2750,7 @@ vice("Wojciech Strzelczyk", "Polska Liga Esportowa 2023: Split #2", "ThunderFlas
 
 nick("Mateusz Witman", "Ex1st").
 entry_year("Mateusz Witman", 2020).
+image("Mateusz Witman", "https://liquipedia.net/commons/images/thumb/5/57/ThunderFlash_Ex1st_2023.png/600px-ThunderFlash_Ex1st_2023.png").
                      
 age("Mateusz Witman", 19).
 birth_month("Mateusz Witman", "October").
@@ -2685,6 +2783,7 @@ vice("Mateusz Witman", "Polska Liga Esportowa 2023: Split #2", "ThunderFlash").
 
 nick("Patryk Tomaszewski", "Demho").
 entry_year("Patryk Tomaszewski", 2018).
+image("Patryk Tomaszewski", "https://liquipedia.net/commons/images/thumb/e/ea/Demho_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Demho_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Patryk Tomaszewski", 23).
 birth_month("Patryk Tomaszewski", "February").
@@ -2724,6 +2823,7 @@ vice("Patryk Tomaszewski", "ESEA Season 38: Premier Division - Europe", "Anonymo
 
 nick("Sebastian Kuśmierz", "fr3nd").
 entry_year("Sebastian Kuśmierz", 2018).
+image("Sebastian Kuśmierz", "https://liquipedia.net/commons/images/thumb/d/d9/Fr3nd_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Fr3nd_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Sebastian Kuśmierz", 21).
 birth_month("Sebastian Kuśmierz", "April").
@@ -2756,6 +2856,7 @@ vice("Sebastian Kuśmierz", "ESL Mistrzostwa Polski: Autumn 2021", "HONORIS").
 
 nick("Mateusz Zawistowski", "TOAO").
 entry_year("Mateusz Zawistowski", 2016).
+image("Mateusz Zawistowski", "https://liquipedia.net/commons/images/thumb/4/4e/TOAO_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-TOAO_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Mateusz Zawistowski", 27).
 birth_month("Mateusz Zawistowski", "October").
@@ -2795,6 +2896,7 @@ vice("Mateusz Zawistowski", "China Top Shenzhen 2017", "AGO Gaming").
 
 nick("Tizian Feldbusch", "tiziaN").
 entry_year("Tizian Feldbusch", 2012).
+image("Tizian Feldbusch", "https://liquipedia.net/commons/images/thumb/5/53/TiziaN_at_Antwerp_Major_2022_EU_RMR.jpg/600px-TiziaN_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Tizian Feldbusch", 27).
 birth_month("Tizian Feldbusch", "June").
@@ -2829,6 +2931,7 @@ vice("Tizian Feldbusch", "ESL One: Cologne 2018", "BIG").
 
 nick("Luka Živanović", "c0llins").
 entry_year("Luka Živanović", 2016).
+image("Luka Živanović", "https://liquipedia.net/commons/images/thumb/d/dd/4glory_c0llins_2022.png/600px-4glory_c0llins_2022.png").
                      
 age("Luka Živanović", 25).
 birth_month("Luka Živanović", "August").
@@ -2859,6 +2962,7 @@ vice("Luka Živanović", "European Pro League Season 10", "Entropiq").
 
 nick("Blagoy Dimitrov", "Oxygen").
 entry_year("Blagoy Dimitrov", 2019).
+image("Blagoy Dimitrov", "https://liquipedia.net/commons/images/thumb/e/e6/Oxygen_at_BGE_Stara_Zagora.png/600px-Oxygen_at_BGE_Stara_Zagora.png").
                      
 age("Blagoy Dimitrov", 20).
 birth_month("Blagoy Dimitrov", "May").
@@ -2887,6 +2991,7 @@ vice("Blagoy Dimitrov", "Elisa Invitational Summer 2021", "SKADE").
 
 nick("Max Kugener", "Marix").
 entry_year("Max Kugener", 2018).
+image("Max Kugener", "https://liquipedia.net/commons/images/thumb/b/bb/Marix_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Marix_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Max Kugener", 20).
 birth_month("Max Kugener", "July").
@@ -2922,6 +3027,7 @@ vice("Max Kugener", "ESL Pro League Season 15", "Sprout").
 
 nick("Łukasz Pachucki", "mwlky").
 entry_year("Łukasz Pachucki", 2019).
+image("Łukasz Pachucki", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Łukasz Pachucki", 20).
 birth_month("Łukasz Pachucki", "May").
@@ -2956,6 +3062,7 @@ vice("Łukasz Pachucki", "ESL Pro League Season 18", "ORKS").
 
 nick("Niclas Krumhorn", "J").
 entry_year("Niclas Krumhorn", 2012).
+image("Niclas Krumhorn", "https://liquipedia.net/commons/images/thumb/6/69/Enkay_J_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Enkay_J_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Niclas Krumhorn", 34).
 birth_month("Niclas Krumhorn", "June").
@@ -2990,6 +3097,7 @@ vice("Niclas Krumhorn", "ESL Meisterschaft: Winter 2018", "ALTERNATE aTTaX").
 
 nick("Vlаdуslаv Nеchуроrchuk", "bondik").
 entry_year("Vlаdуslаv Nеchуроrchuk", 2009).
+image("Vlаdуslаv Nеchуроrchuk", "https://liquipedia.net/commons/images/thumb/2/2a/Bondik_DHS_2019.jpg/600px-Bondik_DHS_2019.jpg").
                      
 age("Vlаdуslаv Nеchуроrchuk", 30).
 birth_month("Vlаdуslаv Nеchуроrchuk", "July").
@@ -3026,6 +3134,7 @@ vice("Vlаdуslаv Nеchуроrchuk", "DreamHack Open Tours 2017", "HellRaisers"
 
 nick("Oleksandr Turchyn", "Smash").
 entry_year("Oleksandr Turchyn", 2018).
+image("Oleksandr Turchyn", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Oleksandr Turchyn", 21).
 birth_month("Oleksandr Turchyn", "June").
@@ -3054,6 +3163,7 @@ vice("Oleksandr Turchyn", "UPEA Ukrainian Cup 2021", "Esports Club Kyiv").
 
 nick("Jevghen Serghachev", "j3kie").
 entry_year("Jevghen Serghachev", 2019).
+image("Jevghen Serghachev", "https://liquipedia.net/commons/images/d/de/J3kie_IKLA_2023.png").
                      
 age("Jevghen Serghachev", 23).
 birth_month("Jevghen Serghachev", "July").
@@ -3090,6 +3200,7 @@ vice("Jevghen Serghachev", "European Championship 2022", "?").
 
 nick("Oleksandr Ghordjejev", "Shara").
 entry_year("Oleksandr Ghordjejev", 2009).
+image("Oleksandr Ghordjejev", "https://liquipedia.net/commons/images/thumb/8/81/Shara_at_ELEAGUE_Season_1.jpg/600px-Shara_at_ELEAGUE_Season_1.jpg").
                      
 age("Oleksandr Ghordjejev", 31).
 birth_month("Oleksandr Ghordjejev", "August").
@@ -3116,6 +3227,7 @@ vice("Oleksandr Ghordjejev", "Acer Predator Masters Season 2", "FlipSid3 Tactics
 
 nick("İsmailсan Dörtkardeş", "XANTARES").
 entry_year("İsmailсan Dörtkardeş", 2012).
+image("İsmailсan Dörtkardeş", "https://liquipedia.net/commons/images/thumb/f/f1/XANTARES_at_ESL_Challenger_Jonkoping_2023.jpg/600px-XANTARES_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("İsmailсan Dörtkardeş", 28).
 birth_month("İsmailсan Dörtkardeş", "August").
@@ -3143,6 +3255,7 @@ vice("İsmailсan Dörtkardeş", "World Electronic Sports Games 2017", "Space So
 
 nick("Buğra Arkın", "Calyx").
 entry_year("Buğra Arkın", 2014).
+image("Buğra Arkın", "https://liquipedia.net/commons/images/thumb/7/7d/Calyx_at_ESL_Challenger_Jonkoping_2023.jpg/600px-Calyx_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("Buğra Arkın", 25).
 birth_month("Buğra Arkın", "July").
@@ -3181,6 +3294,7 @@ vice("Buğra Arkın", "Play2Live Cryptomasters", "Space Soldiers").
 
 nick("Engin Küpeli", "MAJ3R").
 entry_year("Engin Küpeli", 2006).
+image("Engin Küpeli", "https://liquipedia.net/commons/images/thumb/a/af/MAJ3R_at_ESL_Pro_League_S18.jpg/600px-MAJ3R_at_ESL_Pro_League_S18.jpg").
                      
 age("Engin Küpeli", 33).
 birth_month("Engin Küpeli", "January").
@@ -3224,8 +3338,9 @@ vice("Engin Küpeli", "World Electronic Sports Games 2017", "Space Soldiers").
 
 nick("Ali Haydar Yalçın", "Wicadia").
 entry_year("Ali Haydar Yalçın", 2021).
+image("Ali Haydar Yalçın", "https://liquipedia.net/commons/images/thumb/6/66/Wicadia_at_ESL_Pro_League_S18.jpg/600px-Wicadia_at_ESL_Pro_League_S18.jpg").
                      
-age("Ali Haydar Yalçın", 18).
+age("Ali Haydar Yalçın", 19).
 birth_month("Ali Haydar Yalçın", "March").
 birth_year("Ali Haydar Yalçın", 2005).
 birth_day("Ali Haydar Yalçın", 4).
@@ -3252,6 +3367,7 @@ vice("Ali Haydar Yalçın", "CCT South Europe Series #4", "Eternal Fire").
 
 nick("Özgür Eker", "woxic").
 entry_year("Özgür Eker", 2012).
+image("Özgür Eker", "https://liquipedia.net/commons/images/thumb/0/06/Woxic_at_ESL_Pro_League_S18.jpg/600px-Woxic_at_ESL_Pro_League_S18.jpg").
                      
 age("Özgür Eker", 25).
 birth_month("Özgür Eker", "September").
@@ -3288,6 +3404,7 @@ vice("Özgür Eker", "EPICENTER 2019", "mousesports").
 
 nick("Sezgin Kalaycı", "Fabre").
 entry_year("Sezgin Kalaycı", 2010).
+image("Sezgin Kalaycı", "https://liquipedia.net/commons/images/thumb/5/5e/Fabre_at_ESL_Challenger_Jonkoping_2023.jpg/600px-Fabre_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("Sezgin Kalaycı", 33).
 birth_month("Sezgin Kalaycı", "June").
@@ -3314,6 +3431,7 @@ vice("Sezgin Kalaycı", "WINNERS League - Season 1: Starter Division", "TOA E-Sp
 
 nick("Nemanja Kovač", "Error").
 entry_year("Nemanja Kovač", 2015).
+image("Nemanja Kovač", "https://liquipedia.net/commons/images/thumb/6/69/HuNter-_at_IEM_Katowice_2024.jpg/600px-HuNter-_at_IEM_Katowice_2024.jpg").
                      
 age("Nemanja Kovač", 28).
 birth_month("Nemanja Kovač", "January").
@@ -3344,6 +3462,7 @@ vice("Nemanja Kovač", "Intel Extreme Masters XIV - World Championship", "G2 Esp
 
 nick("Nikola Kovač", "NiKo").
 entry_year("Nikola Kovač", 2009).
+image("Nikola Kovač", "https://liquipedia.net/commons/images/thumb/a/a1/NiKo_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-NiKo_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Nikola Kovač", 27).
 birth_month("Nikola Kovač", "February").
@@ -3388,6 +3507,7 @@ vice("Nikola Kovač", "PGL Major Stockholm 2021", "G2 Esports").
 
 nick("Ilya Osipov", "m0NESY").
 entry_year("Ilya Osipov", 2019).
+image("Ilya Osipov", "https://liquipedia.net/commons/images/thumb/d/dd/M0NESY_at_IEM_Katowice_2024.jpg/600px-M0NESY_at_IEM_Katowice_2024.jpg").
                      
 age("Ilya Osipov", 18).
 birth_month("Ilya Osipov", "May").
@@ -3413,6 +3533,7 @@ vice("Ilya Osipov", "Intel Extreme Masters XVI - Katowice", "G2 Esports").
 
 nick("Rasmus Pallisgaard Nielsen", "HooXi").
 entry_year("Rasmus Pallisgaard Nielsen", 2015).
+image("Rasmus Pallisgaard Nielsen", "https://liquipedia.net/commons/images/thumb/b/bb/HooXi_at_IEM_Katowice_2024.jpg/600px-HooXi_at_IEM_Katowice_2024.jpg").
                      
 age("Rasmus Pallisgaard Nielsen", 28).
 birth_month("Rasmus Pallisgaard Nielsen", "May").
@@ -3451,6 +3572,7 @@ champion("Rasmus Pallisgaard Nielsen", "PGL Major Antwerp 2022: European RMR B",
 
 nick("Nemanja Isaković", "nexa").
 entry_year("Nemanja Isaković", 2013).
+image("Nemanja Isaković", "https://liquipedia.net/commons/images/thumb/7/7d/Nexa_at_IEM_Katowice_2024.jpg/600px-Nexa_at_IEM_Katowice_2024.jpg").
                      
 age("Nemanja Isaković", 26).
 birth_month("Nemanja Isaković", "April").
@@ -3489,6 +3611,7 @@ vice("Nemanja Isaković", "Intel Extreme Masters XIV - World Championship", "G2 
 
 nick("Wiktor Jerzy Wojtas", "TaZ").
 entry_year("Wiktor Jerzy Wojtas", 2001).
+image("Wiktor Jerzy Wojtas", "https://liquipedia.net/commons/images/thumb/0/0d/TaZ_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-TaZ_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Wiktor Jerzy Wojtas", 37).
 birth_month("Wiktor Jerzy Wojtas", "June").
@@ -3535,6 +3658,7 @@ vice("Wiktor Jerzy Wojtas", "ELEAGUE Major Atlanta 2017", "Virtus.pro").
 
 nick("Flatron Halimi", "juanflatroo").
 entry_year("Flatron Halimi", 2018).
+image("Flatron Halimi", "https://liquipedia.net/commons/images/thumb/9/95/Juanflatroo_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Juanflatroo_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Flatron Halimi", 26).
 birth_month("Flatron Halimi", "March").
@@ -3565,6 +3689,7 @@ vice("Flatron Halimi", "#HomeSweetHome: Week 4", "Team Secret").
 
 nick("Dionis Budeci", "sinnopsyy").
 entry_year("Dionis Budeci", 2018).
+image("Dionis Budeci", "https://liquipedia.net/commons/images/thumb/a/ab/Sinnopsyy_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Sinnopsyy_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Dionis Budeci", 28).
 birth_month("Dionis Budeci", "July").
@@ -3595,6 +3720,7 @@ vice("Dionis Budeci", "#HomeSweetHome: Week 4", "Team Secret").
 
 nick("Rigon Gashi", "rigoN").
 entry_year("Rigon Gashi", 2017).
+image("Rigon Gashi", "https://liquipedia.net/commons/images/thumb/4/48/RigoN_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-RigoN_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Rigon Gashi", 24).
 birth_month("Rigon Gashi", "October").
@@ -3626,6 +3752,7 @@ vice("Rigon Gashi", "Gjirafa50 Masters League Season 2", "Team BLINK").
 
 nick("Jonatan Lundberg", "Devilwalk").
 entry_year("Jonatan Lundberg", 2012).
+image("Jonatan Lundberg", "https://liquipedia.net/commons/images/thumb/d/dd/Devilwalk_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Devilwalk_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Jonatan Lundberg", 32).
 birth_month("Jonatan Lundberg", "April").
@@ -3668,6 +3795,7 @@ vice("Jonatan Lundberg", "ESPORTSM 2012/2013", "Epsilon eSports").
 
 nick("Tomasz Wójcik", "phr").
 entry_year("Tomasz Wójcik", 2016).
+image("Tomasz Wójcik", "https://liquipedia.net/commons/images/thumb/5/55/Phr_cs_summit_5.jpg/600px-Phr_cs_summit_5.jpg").
                      
 age("Tomasz Wójcik", 27).
 birth_month("Tomasz Wójcik", "September").
@@ -3704,6 +3832,7 @@ vice("Tomasz Wójcik", "China Top Shenzhen 2017", "AGO Gaming").
 
 nick("Damian Kisłowski", "Furlan").
 entry_year("Damian Kisłowski", 2013).
+image("Damian Kisłowski", "https://liquipedia.net/commons/images/thumb/9/95/Furlan_%40_EPL_S15.jpg/600px-Furlan_%40_EPL_S15.jpg").
                      
 age("Damian Kisłowski", 29).
 birth_month("Damian Kisłowski", "December").
@@ -3738,6 +3867,7 @@ vice("Damian Kisłowski", "The World Championships 2015", "Team Poland").
 
 nick("Karol Rodowicz", "rallen").
 entry_year("Karol Rodowicz", 2014).
+image("Karol Rodowicz", "https://liquipedia.net/commons/images/thumb/8/85/Rallen_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Rallen_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Karol Rodowicz", 29).
 birth_month("Karol Rodowicz", "June").
@@ -3783,6 +3913,7 @@ vice("Karol Rodowicz", "World Electronic Sports Games 2016", "Team Kinguin").
 
 nick("Joey Steusel", "CRUC1AL").
 entry_year("Joey Steusel", 2013).
+image("Joey Steusel", "https://liquipedia.net/commons/images/thumb/9/96/CRUC1AL_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-CRUC1AL_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Joey Steusel", 27).
 birth_month("Joey Steusel", "February").
@@ -3823,6 +3954,7 @@ vice("Joey Steusel", "MSI Gaming Arena 2019", "ex-Epsilon Esports").
 
 nick("Wojciech Klęba", "darchevile").
 entry_year("Wojciech Klęba", 2018).
+image("Wojciech Klęba", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Wojciech Klęba", 24).
 birth_month("Wojciech Klęba", "August").
@@ -3854,6 +3986,7 @@ champion("Wojciech Klęba", "ESEA Rank S - Europe December 2020 Week 3", "Turów
 
 nick("Volodymyr Veletnjuk", "Woro2k").
 entry_year("Volodymyr Veletnjuk", 2018).
+image("Volodymyr Veletnjuk", "https://liquipedia.net/commons/images/thumb/b/b9/Woro2k_at_IEM_Katowice_2024.jpg/600px-Woro2k_at_IEM_Katowice_2024.jpg").
                      
 age("Volodymyr Veletnjuk", 22).
 birth_month("Volodymyr Veletnjuk", "August").
@@ -3881,6 +4014,7 @@ vice("Volodymyr Veletnjuk", "Roobet Cup 2023", "Monte").
 
 nick("Serghij Demchenko", "DemQQ").
 entry_year("Serghij Demchenko", 2019).
+image("Serghij Demchenko", "https://liquipedia.net/commons/images/thumb/4/43/DemQQ_at_ESL_Challenger_Jonkoping_2023.jpg/600px-DemQQ_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("Serghij Demchenko", 22).
 birth_month("Serghij Demchenko", "May").
@@ -3907,6 +4041,7 @@ vice("Serghij Demchenko", "Roobet Cup 2023", "Monte").
 
 nick("Szymon Mrozek", "kRaSnaL").
 entry_year("Szymon Mrozek", 2019).
+image("Szymon Mrozek", "https://liquipedia.net/commons/images/thumb/7/7b/KRaSnaL_at_ESL_Challenger_Jonkoping_2023.jpg/600px-KRaSnaL_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("Szymon Mrozek", 20).
 birth_month("Szymon Mrozek", "April").
@@ -3933,6 +4068,7 @@ vice("Szymon Mrozek", "Roobet Cup 2023", "Monte").
 
 nick("Serhij Bezhanov", "Error").
 entry_year("Serhij Bezhanov", 2006).
+image("Serhij Bezhanov", "https://liquipedia.net/commons/images/thumb/f/fc/Lmbt_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Lmbt_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Serhij Bezhanov", 36).
 birth_month("Serhij Bezhanov", "September").
@@ -3977,6 +4113,7 @@ vice("Serhij Bezhanov", "Arbalet Cup Almaty 2009 Showmatch", "KerchNET").
 
 nick("Ádám Torzsás", "torzsi").
 entry_year("Ádám Torzsás", 2016).
+image("Ádám Torzsás", "https://liquipedia.net/commons/images/thumb/6/6f/Torzsi_at_ESL_Pro_League_S17.jpg/600px-Torzsi_at_ESL_Pro_League_S17.jpg").
                      
 age("Ádám Torzsás", 21).
 birth_month("Ádám Torzsás", "May").
@@ -4002,6 +4139,7 @@ vice("Ádám Torzsás", "Global Esports Tour Dubai 2022", "MOUZ").
 
 nick("Dorian Berman", "xertioN").
 entry_year("Dorian Berman", 2018).
+image("Dorian Berman", "https://liquipedia.net/commons/images/thumb/b/be/XertioN_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-XertioN_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Dorian Berman", 19).
 birth_month("Dorian Berman", "July").
@@ -4026,6 +4164,7 @@ vice("Dorian Berman", "Intel Extreme Masters Dallas 2023", "MOUZ").
 
 nick("Kamil Szkaradek", "siuhy").
 entry_year("Kamil Szkaradek", 2018).
+image("Kamil Szkaradek", "https://liquipedia.net/commons/images/thumb/f/f2/Siuhy_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Siuhy_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Kamil Szkaradek", 21).
 birth_month("Kamil Szkaradek", "August").
@@ -4054,6 +4193,7 @@ vice("Kamil Szkaradek", "BLAST.tv Paris Major 2023", "GamerLegion").
 
 nick("Jimi Salo", "Jimpphat").
 entry_year("Jimi Salo", 2019).
+image("Jimi Salo", "https://liquipedia.net/commons/images/thumb/c/c7/Jimpphat_at_IEM_Cologne_2023.jpg/600px-Jimpphat_at_IEM_Cologne_2023.jpg").
                      
 age("Jimi Salo", 17).
 birth_month("Jimi Salo", "September").
@@ -4078,6 +4218,7 @@ vice("Jimi Salo", "CS Asia Championships 2023", "MOUZ").
 
 nick("Ludvig Brolin", "Error").
 entry_year("Ludvig Brolin", 2016).
+image("Ludvig Brolin", "https://liquipedia.net/commons/images/thumb/1/10/Brollan_at_IEM_Katowice_2024.jpg/600px-Brollan_at_IEM_Katowice_2024.jpg").
                      
 age("Ludvig Brolin", 21).
 birth_month("Ludvig Brolin", "June").
@@ -4107,6 +4248,7 @@ vice("Ludvig Brolin", "StarSeries & i-League CS:GO Season 7", "Fnatic").
 
 nick("Dennis Benthin Nielsen", "sycrone").
 entry_year("Dennis Benthin Nielsen", 2015).
+image("Dennis Benthin Nielsen", "https://liquipedia.net/commons/images/thumb/1/12/Sycrone_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Sycrone_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Dennis Benthin Nielsen", 28).
 birth_month("Dennis Benthin Nielsen", "February").
@@ -4150,6 +4292,7 @@ vice("Dennis Benthin Nielsen", "NetParty Fyn 2017", "North Academy").
 
 nick("Valerij Jevghenijovych Vakhovsjkyj", "b1t").
 entry_year("Valerij Jevghenijovych Vakhovsjkyj", 2019).
+image("Valerij Jevghenijovych Vakhovsjkyj", "https://liquipedia.net/commons/images/thumb/f/fe/B1t_at_IEM_Katowice_2024.jpg/600px-B1t_at_IEM_Katowice_2024.jpg").
                      
 age("Valerij Jevghenijovych Vakhovsjkyj", 21).
 birth_month("Valerij Jevghenijovych Vakhovsjkyj", "January").
@@ -4176,6 +4319,7 @@ vice("Valerij Jevghenijovych Vakhovsjkyj", "PGL Major Antwerp 2022", "Natus Vinc
 
 nick("Aleksi Antti Kaarlo Virolainen", "Aleksib").
 entry_year("Aleksi Antti Kaarlo Virolainen", 2015).
+image("Aleksi Antti Kaarlo Virolainen", "https://liquipedia.net/commons/images/thumb/f/f9/Aleksib_at_IEM_Sydney_2023.jpg/600px-Aleksib_at_IEM_Sydney_2023.jpg").
                      
 age("Aleksi Antti Kaarlo Virolainen", 26).
 birth_month("Aleksi Antti Kaarlo Virolainen", "March").
@@ -4215,6 +4359,7 @@ vice("Aleksi Antti Kaarlo Virolainen", "Intel Extreme Masters XIII - Katowice Ma
 
 nick("Justinas Lekavicius", "jL").
 entry_year("Justinas Lekavicius", 2018).
+image("Justinas Lekavicius", "https://liquipedia.net/commons/images/thumb/1/18/JL_at_IEM_Sydney_2023.jpg/600px-JL_at_IEM_Sydney_2023.jpg").
                      
 age("Justinas Lekavicius", 24).
 birth_month("Justinas Lekavicius", "September").
@@ -4237,6 +4382,7 @@ vice("Justinas Lekavicius", "ESL Pro League Season 18", "Natus Vincere").
 
 nick("Ivan Mihai", "iM").
 entry_year("Ivan Mihai", 2018).
+image("Ivan Mihai", "https://liquipedia.net/commons/images/thumb/8/87/IM_at_IEM_Katowice_2024.jpg/600px-IM_at_IEM_Katowice_2024.jpg").
                      
 age("Ivan Mihai", 24).
 birth_month("Ivan Mihai", "July").
@@ -4259,6 +4405,7 @@ vice("Ivan Mihai", "BLAST.tv Paris Major 2023", "GamerLegion").
 
 nick("Ihor Zhdanov", "w0nderful").
 entry_year("Ihor Zhdanov", 2020).
+image("Ihor Zhdanov", "https://liquipedia.net/commons/images/thumb/4/41/W0nderful_at_IEM_Katowice_2024.jpg/600px-W0nderful_at_IEM_Katowice_2024.jpg").
                      
 age("Ihor Zhdanov", 19).
 birth_month("Ihor Zhdanov", "December").
@@ -4285,6 +4432,7 @@ vice("Ihor Zhdanov", "ESL Challenger League Season 43: Europe", "Team Spirit").
 
 nick("Andrij Oleksijovych Ghorodensjkyj", "B1ad3").
 entry_year("Andrij Oleksijovych Ghorodensjkyj", 2003).
+image("Andrij Oleksijovych Ghorodensjkyj", "https://liquipedia.net/commons/images/thumb/b/bb/B1ad3_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-B1ad3_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Andrij Oleksijovych Ghorodensjkyj", 37).
 birth_month("Andrij Oleksijovych Ghorodensjkyj", "November").
@@ -4318,6 +4466,7 @@ vice("Andrij Oleksijovych Ghorodensjkyj", "Adrenaline Cyber League 2016", "FlipS
 
 nick("Catalin-Ionut Stanescu", "BTN").
 entry_year("Catalin-Ionut Stanescu", 2010).
+image("Catalin-Ionut Stanescu", "https://liquipedia.net/commons/images/thumb/f/f2/BTN_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-BTN_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Catalin-Ionut Stanescu", 34).
 birth_month("Catalin-Ionut Stanescu", "May").
@@ -4344,6 +4493,7 @@ vice("Catalin-Ionut Stanescu", "IeSF World Championship 2017", "Nexus Gaming").
 
 nick("Cosmin Teodorescu", "ragga").
 entry_year("Cosmin Teodorescu", 2018).
+image("Cosmin Teodorescu", "https://liquipedia.net/commons/images/thumb/3/3a/Ragga_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Ragga_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Cosmin Teodorescu", 23).
 birth_month("Cosmin Teodorescu", "March").
@@ -4372,6 +4522,7 @@ vice("Cosmin Teodorescu", "OGA Counter PIT Season 6", "Nexus Gaming").
 
 nick("Adrian Guță", "XELLOW").
 entry_year("Adrian Guță", 2015).
+image("Adrian Guță", "https://liquipedia.net/commons/images/thumb/4/47/XELLOW_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-XELLOW_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Adrian Guță", 23).
 birth_month("Adrian Guță", "October").
@@ -4403,6 +4554,7 @@ vice("Adrian Guță", "IeSF World Championship 2017", "Nexus Gaming").
 
 nick("Alexandru Ștefan", "s0und").
 entry_year("Alexandru Ștefan", 2020).
+image("Alexandru Ștefan", "https://liquipedia.net/commons/images/thumb/e/e9/S0und_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-S0und_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Alexandru Ștefan", 21).
 birth_month("Alexandru Ștefan", "September").
@@ -4427,6 +4579,7 @@ vice("Alexandru Ștefan", "JLF 3", "GameAgents").
 
 nick("Ersin Chiriac", "ERSIN").
 entry_year("Ersin Chiriac", 2020).
+image("Ersin Chiriac", "https://liquipedia.net/commons/images/thumb/c/c7/ERSIN_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-ERSIN_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Ersin Chiriac", 22).
 birth_month("Ersin Chiriac", "December").
@@ -4450,6 +4603,7 @@ vice("Ersin Chiriac", "Ghetto eGames Season 1: Cup #7", "Quantum Prodigy").
 
 nick("Maciej Miklas", "F1KU").
 entry_year("Maciej Miklas", 2017).
+image("Maciej Miklas", "https://liquipedia.net/commons/images/thumb/1/1d/F1KU_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-F1KU_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Maciej Miklas", 20).
 birth_month("Maciej Miklas", "May").
@@ -4471,6 +4625,7 @@ champion("Maciej Miklas", "OGA Counter PIT Season 5", "AGO").
 
 nick("Iulian Harjău", "regali").
 entry_year("Iulian Harjău", 2018).
+image("Iulian Harjău", "https://liquipedia.net/commons/images/thumb/9/94/Regali_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Regali_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Iulian Harjău", 21).
 birth_month("Iulian Harjău", "August").
@@ -4487,7 +4642,6 @@ former_team("Iulian Harjău", "CPH Flames").
 former_team("Iulian Harjău", "OG").
 role("Iulian Harjău", "AWPer").
 champion("Iulian Harjău", "Intel Extreme Masters Cologne 2023", "OG").
-champion("Iulian Harjău", "BLAST Premier: Fall Groups 2023", "OG").
 champion("Iulian Harjău", "CCT Central Europe Series #4", "Copenhagen Flames").
 champion("Iulian Harjău", "Global Offensive Champions League Season 3", "Copenhagen Flames").
 champion("Iulian Harjău", "European Development Championship Season 6", "Copenhagen Flames").
@@ -4497,6 +4651,7 @@ champion("Iulian Harjău", "CCT South Europe Series #1", "Copenhagen Flames").
 
 nick("Nils Gruhne", "k1to").
 entry_year("Nils Gruhne", 2016).
+image("Nils Gruhne", "https://liquipedia.net/commons/images/thumb/e/ed/K1to_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-K1to_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Nils Gruhne", 25).
 birth_month("Nils Gruhne", "November").
@@ -4531,6 +4686,7 @@ vice("Nils Gruhne", "Elisa Masters Espoo 2022", "BIG").
 
 nick("Bram Campana", "Nexius").
 entry_year("Bram Campana", 2018).
+image("Bram Campana", "https://liquipedia.net/commons/images/thumb/0/0d/Nexius_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Nexius_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Bram Campana", 20).
 birth_month("Bram Campana", "December").
@@ -4551,11 +4707,11 @@ champion("Bram Campana", "Kayzr League Spring 2022", "LowLandLions").
 champion("Bram Campana", "Elite Series 2021", "LowLandLions").
 champion("Bram Campana", "La DH Community Cup", "LowLandLions").
 vice("Bram Campana", "Ace X Prague Open 2022", "eClub Brugge").
-vice("Bram Campana", "Elite Series 2022: Spring Split", "LowLandLions").
 
 
 nick("Nikita Martynenko", "HeavyGod").
 entry_year("Nikita Martynenko", 2018).
+image("Nikita Martynenko", "https://liquipedia.net/commons/images/thumb/e/e6/HeavyGod_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-HeavyGod_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Nikita Martynenko", 21).
 birth_month("Nikita Martynenko", "July").
@@ -4576,11 +4732,11 @@ role("Nikita Martynenko", "Rifler").
 champion("Nikita Martynenko", "BLAST Premier: Spring Groups 2024", "OG").
 champion("Nikita Martynenko", "ESEA Cash Cup: Europe - Summer 2021 #1", "p0tatos").
 vice("Nikita Martynenko", "ESL Premiership Autumn 2023", "Endpoint").
-vice("Nikita Martynenko", "ESL Premiership Spring 2023", "Endpoint").
 
 
 nick("Norbert Török", "msN").
 entry_year("Norbert Török", 2019).
+image("Norbert Török", "https://liquipedia.net/commons/images/thumb/f/f7/MsN_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-MsN_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Norbert Török", 18).
 birth_month("Norbert Török", "July").
@@ -4613,6 +4769,7 @@ vice("Norbert Török", "Y-Games PRO Series 2023", "DomiNation eSports").
 
 nick("Áron Homoki", "Aaron").
 entry_year("Áron Homoki", 2015).
+image("Áron Homoki", "https://liquipedia.net/commons/images/thumb/0/0f/Aaron_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Aaron_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Áron Homoki", 25).
 birth_month("Áron Homoki", "February").
@@ -4651,6 +4808,7 @@ vice("Áron Homoki", "Y-Games PRO Series 2023", "DomiNation eSports").
 
 nick("Zsolt Jurus", "Kamion").
 entry_year("Zsolt Jurus", 2017).
+image("Zsolt Jurus", "https://liquipedia.net/commons/images/thumb/0/09/Kamion_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Kamion_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Zsolt Jurus", 24).
 birth_month("Zsolt Jurus", "October").
@@ -4686,6 +4844,7 @@ vice("Zsolt Jurus", "Y-Games PRO Series 2023", "DomiNation eSports").
 
 nick("Daniil Poryadin", "Porya").
 entry_year("Daniil Poryadin", 2018).
+image("Daniil Poryadin", "https://liquipedia.net/commons/images/thumb/5/5a/Porya_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Porya_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Daniil Poryadin", 22).
 birth_month("Daniil Poryadin", "June").
@@ -4713,6 +4872,7 @@ champion("Daniil Poryadin", "THE GLORIOUS", "Worst Enemy").
 
 nick("Brajan Lemacha", "DGL").
 entry_year("Brajan Lemacha", 2020).
+image("Brajan Lemacha", "https://liquipedia.net/commons/images/thumb/3/3e/DGL_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-DGL_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Brajan Lemacha", 25).
 birth_month("Brajan Lemacha", "March").
@@ -4742,6 +4902,7 @@ vice("Brajan Lemacha", "Esport Tour Pro Spring 2021", "M1 EDEN").
 
 nick("Lajos Szloboda", "SZLOBESZKOV").
 entry_year("Lajos Szloboda", 2023).
+image("Lajos Szloboda", "https://liquipedia.net/commons/images/thumb/1/11/SZLOBESZKOV_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-SZLOBESZKOV_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Lajos Szloboda", 31).
 birth_month("Lajos Szloboda", "June").
@@ -4767,6 +4928,7 @@ vice("Lajos Szloboda", "Y-Games PRO Series 2023", "DomiNation eSports").
 
 nick("Martin Nakonieczny", "maaryy").
 entry_year("Martin Nakonieczny", 2020).
+image("Martin Nakonieczny", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Martin Nakonieczny", 22).
 birth_month("Martin Nakonieczny", "June").
@@ -4799,6 +4961,7 @@ vice("Martin Nakonieczny", "European Pro League Season 15: Division 2", "Permitt
 
 nick("Piotr Taterka", "morelz").
 entry_year("Piotr Taterka", 2013).
+image("Piotr Taterka", "https://liquipedia.net/commons/images/thumb/4/4e/MorelzDHV2018.jpg/600px-MorelzDHV2018.jpg").
                      
 age("Piotr Taterka", 29).
 birth_month("Piotr Taterka", "July").
@@ -4850,6 +5013,7 @@ champion("Piotr Taterka", "CSCenter League", "Pride Gaming").
 
 nick("Bartosz Niebisz", "bnox").
 entry_year("Bartosz Niebisz", 2017).
+image("Bartosz Niebisz", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Bartosz Niebisz", 23).
 birth_month("Bartosz Niebisz", "April").
@@ -4877,6 +5041,7 @@ vice("Bartosz Niebisz", "Polska Liga Esportowa S9 Grupa Mistrzowska", "PACT").
 
 nick("Arkadiusz Nawojski", "Vegi").
 entry_year("Arkadiusz Nawojski", 2017).
+image("Arkadiusz Nawojski", "https://liquipedia.net/commons/images/thumb/3/33/Vegi_Moche_XL_Esports_2019.jpg/600px-Vegi_Moche_XL_Esports_2019.jpg").
                      
 age("Arkadiusz Nawojski", 23).
 birth_month("Arkadiusz Nawojski", "May").
@@ -4913,6 +5078,7 @@ vice("Arkadiusz Nawojski", "ESL Mistrzostwa Polski - Summer 2018", "PACT").
 
 nick("Bartłomiej Trybuła", "mASKED").
 entry_year("Bartłomiej Trybuła", 2019).
+image("Bartłomiej Trybuła", "https://liquipedia.net/commons/images/thumb/1/15/MASKED_at_IEM_Rio_Major_2022_EU_RMR.png/600px-MASKED_at_IEM_Rio_Major_2022_EU_RMR.png").
                      
 age("Bartłomiej Trybuła", 23).
 birth_month("Bartłomiej Trybuła", "January").
@@ -4940,6 +5106,7 @@ vice("Bartłomiej Trybuła", "ESL Mistrzostwa Polski Spring 2023", "Anonymo Espo
 
 nick("Patryk Korab", "Sidney").
 entry_year("Patryk Korab", 2016).
+image("Patryk Korab", "https://liquipedia.net/commons/images/a/a8/Sidney1.png").
                      
 age("Patryk Korab", 25).
 birth_month("Patryk Korab", "June").
@@ -4977,6 +5144,7 @@ vice("Patryk Korab", "Polska Liga Esportowa S4 Grupa Mistrzowska", "MIKSTURA").
 
 nick("Sebastian Daňo", "beastik").
 entry_year("Sebastian Daňo", 2014).
+image("Sebastian Daňo", "https://liquipedia.net/commons/images/thumb/7/75/Beastik_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Beastik_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Sebastian Daňo", 26).
 birth_month("Sebastian Daňo", "January").
@@ -5010,6 +5178,7 @@ vice("Sebastian Daňo", "Vulkan Fight Series", "SINNERS Esports").
 
 nick("Max Kvapil", "SHOCK").
 entry_year("Max Kvapil", 2016).
+image("Max Kvapil", "https://liquipedia.net/commons/images/thumb/f/f3/SHOCK_at_Antwerp_Major_2022_EU_RMR.jpg/600px-SHOCK_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Max Kvapil", 23).
 birth_month("Max Kvapil", "October").
@@ -5048,6 +5217,7 @@ vice("Max Kvapil", "Vulkan Fight Series", "SINNERS Esports").
 
 nick("Tomáš Šťastný", "oskar").
 entry_year("Tomáš Šťastný", 2006).
+image("Tomáš Šťastný", "https://liquipedia.net/commons/images/thumb/c/c6/Sinners_oskar.png/600px-Sinners_oskar.png").
                      
 age("Tomáš Šťastný", 32).
 birth_month("Tomáš Šťastný", "June").
@@ -5117,6 +5287,7 @@ vice("Tomáš Šťastný", "Esports Championship Series Season 4 - Finals", "mou
 
 nick("Adam Zouhar", "NEOFRAG").
 entry_year("Adam Zouhar", 2017).
+image("Adam Zouhar", "https://liquipedia.net/commons/images/thumb/8/8d/NEOFRAG_at_BLAST_Spring_Finals_2022.jpg/600px-NEOFRAG_at_BLAST_Spring_Finals_2022.jpg").
                      
 age("Adam Zouhar", 22).
 birth_month("Adam Zouhar", "May").
@@ -5151,6 +5322,7 @@ champion("Adam Zouhar", "Sazka eLEAGUE Fall 2020", "SINNERS Esports").
 
 nick("Filip Dolenský", "AJTT").
 entry_year("Filip Dolenský", 2016).
+image("Filip Dolenský", "https://liquipedia.net/commons/images/thumb/2/2a/AJTT_entropiq.jpg/600px-AJTT_entropiq.jpg").
                      
 age("Filip Dolenský", 22).
 birth_month("Filip Dolenský", "June").
@@ -5191,6 +5363,7 @@ vice("Filip Dolenský", "Sazka eLEAGUE Spring 2021", "Entropiq Prague").
 
 nick("Tomáš Tomka", "tomkeejs").
 entry_year("Tomáš Tomka", 2015).
+image("Tomáš Tomka", "https://liquipedia.net/commons/images/thumb/1/1b/Tomkeejs_at_Antwerp_Major_2022_EU_RMR.jpg/600px-Tomkeejs_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Tomáš Tomka", 25).
 birth_month("Tomáš Tomka", "April").
@@ -5222,6 +5395,7 @@ vice("Tomáš Tomka", "Polska Liga Esportowa Superpuchar 2022", "SINNERS Esports
 
 nick("Lukáš Lintner", "sAvana1").
 entry_year("Lukáš Lintner", 2020).
+image("Lukáš Lintner", "https://liquipedia.net/commons/images/c/c2/Sampi_sAvana1_2023.png").
                      
 age("Lukáš Lintner", 20).
 birth_month("Lukáš Lintner", "August").
@@ -5249,6 +5423,7 @@ vice("Lukáš Lintner", "Tipsport Online Cup 2022", "Team Sampi").
 
 nick("Tomáš Bebjak", "fino").
 entry_year("Tomáš Bebjak", 2021).
+image("Tomáš Bebjak", "https://liquipedia.net/commons/images/3/36/Sampi_fino_2023.png").
                      
 age("Tomáš Bebjak", 21).
 birth_month("Tomáš Bebjak", "September").
@@ -5272,6 +5447,7 @@ vice("Tomáš Bebjak", "21Games Gamefair 2021", "Dark Tigers").
 
 nick("Jindřich Chyba", "ZEDKO").
 entry_year("Jindřich Chyba", 2013).
+image("Jindřich Chyba", "https://liquipedia.net/commons/images/thumb/3/37/ZEDKO_at_Antwerp_Major_2022_EU_RMR.jpg/600px-ZEDKO_at_Antwerp_Major_2022_EU_RMR.jpg").
                      
 age("Jindřich Chyba", 25).
 birth_month("Jindřich Chyba", "May").
@@ -5305,6 +5481,7 @@ vice("Jindřich Chyba", "Tipsport Cup Bratislava 2022", "SINNERS Esports").
 
 nick("Robert Kasper", "manguss").
 entry_year("Robert Kasper", 2017).
+image("Robert Kasper", "https://liquipedia.net/commons/images/7/7e/ENTERPRISE_manguss_2022.png").
                      
 age("Robert Kasper", 22).
 birth_month("Robert Kasper", "April").
@@ -5340,6 +5517,7 @@ vice("Robert Kasper", "Sazka eLEAGUE Fall 2021", "ENTERPRISE esports").
 
 nick("Jakub Kokoška", "bfull").
 entry_year("Jakub Kokoška", 2020).
+image("Jakub Kokoška", "https://liquipedia.net/commons/images/e/e3/Sampi_bfull_2023.png").
                      
 age("Jakub Kokoška", 31).
 birth_month("Jakub Kokoška", "March").
@@ -5362,6 +5540,7 @@ vice("Jakub Kokoška", "METAPLAY #1", "Dynamo Eclot").
 
 nick("Linus Oscar Holtäng", "LNZ").
 entry_year("Linus Oscar Holtäng", 2018).
+image("Linus Oscar Holtäng", "https://liquipedia.net/commons/images/thumb/6/65/LNZ_%40_PGL_Major_Stockholm_2021.jpg/600px-LNZ_%40_PGL_Major_Stockholm_2021.jpg").
                      
 age("Linus Oscar Holtäng", 21).
 birth_month("Linus Oscar Holtäng", "October").
@@ -5392,6 +5571,7 @@ vice("Linus Oscar Holtäng", "Svenska Elitserien Spring 2021", "Young Ninjas").
 
 nick("Pere Solsona Saumell", "sausol").
 entry_year("Pere Solsona Saumell", 2019).
+image("Pere Solsona Saumell", "https://liquipedia.net/commons/images/thumb/6/63/Sausol_at_CCT_Central_Europe_Malta_Finals.jpg/600px-Sausol_at_CCT_Central_Europe_Malta_Finals.jpg").
                      
 age("Pere Solsona Saumell", 23).
 birth_month("Pere Solsona Saumell", "May").
@@ -5422,6 +5602,7 @@ vice("Pere Solsona Saumell", "ESL Masters España Season 5", "Team EXILE").
 
 nick("Yasin Koç", "xfl0ud").
 entry_year("Yasin Koç", 2018).
+image("Yasin Koç", "https://liquipedia.net/commons/images/thumb/1/12/Xfl0ud_at_CCT_Central_Europe_Malta_Finals.jpg/600px-Xfl0ud_at_CCT_Central_Europe_Malta_Finals.jpg").
                      
 age("Yasin Koç", 21).
 birth_month("Yasin Koç", "December").
@@ -5457,6 +5638,7 @@ vice("Yasin Koç", "REPUBLEAGUE Season 2", "Eternal Fire").
 
 nick("Illja Chernychenko", "Ganginho").
 entry_year("Illja Chernychenko", 2019).
+image("Illja Chernychenko", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Illja Chernychenko", 22).
 birth_month("Illja Chernychenko", "August").
@@ -5481,6 +5663,7 @@ vice("Illja Chernychenko", "Binance Super Cup", "The Incas").
 
 nick("Jimmy Berndtsson", "Jumpy").
 entry_year("Jimmy Berndtsson", 2006).
+image("Jimmy Berndtsson", "https://liquipedia.net/commons/images/thumb/a/a8/Jumpy_%40_DHDAL19.jpg/600px-Jumpy_%40_DHDAL19.jpg").
                      
 age("Jimmy Berndtsson", 37).
 birth_month("Jimmy Berndtsson", "December").
@@ -5520,6 +5703,7 @@ vice("Jimmy Berndtsson", "SLKS #10", "Volt-Gaming").
 
 nick("Kamil Mętel", "Klameczka").
 entry_year("Kamil Mętel", 2021).
+image("Kamil Mętel", "https://liquipedia.net/commons/images/thumb/0/00/ThunderFlash_Klameczka_2023.png/600px-ThunderFlash_Klameczka_2023.png").
                      
 age("Kamil Mętel", 21).
 birth_month("Kamil Mętel", "June").
@@ -5551,6 +5735,7 @@ vice("Kamil Mętel", "Polska Liga Esportowa 2023: Split #2", "ThunderFlash").
 
 nick("Kacper Ściera", "darko").
 entry_year("Kacper Ściera", 2015).
+image("Kacper Ściera", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Kacper Ściera", 26).
 birth_month("Kacper Ściera", "December").
@@ -5587,6 +5772,7 @@ vice("Kacper Ściera", "ESL Mistrzostwa Polski - Summer 2018", "PACT").
 
 nick("Adrian Lis", "kadziu").
 entry_year("Adrian Lis", 2019).
+image("Adrian Lis", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Adrian Lis", 25).
 birth_month("Adrian Lis", "March").
@@ -5609,6 +5795,7 @@ vice("Adrian Lis", "TheBeatingOfSilent Cup #2", "Impression").
 
 nick("Kuba Markowski", "Markoś").
 entry_year("Kuba Markowski", 2014).
+image("Kuba Markowski", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Kuba Markowski", 25).
 birth_month("Kuba Markowski", "September").
@@ -5648,6 +5835,7 @@ vice("Kuba Markowski", "Eden Arena: Malta Vibes - Week 7", "AVEZ").
 
 nick("Saša Simić", "simke").
 entry_year("Saša Simić", 2020).
+image("Saša Simić", "https://liquipedia.net/commons/images/2/2d/Z10_simke_2022.png").
                      
 age("Saša Simić", 19).
 birth_month("Saša Simić", "June").
@@ -5673,6 +5861,7 @@ vice("Saša Simić", "Telekom eSports Championship Season 1", "Zero Tenacity").
 
 nick("Adin Husić", "brutmonster").
 entry_year("Adin Husić", 2020).
+image("Adin Husić", "https://liquipedia.net/commons/images/4/46/Z10_brutmonster_2022.png").
                      
 age("Adin Husić", 22).
 birth_month("Adin Husić", "August").
@@ -5698,6 +5887,7 @@ vice("Adin Husić", "Telekom eSports Championship Season 1", "Zero Tenacity").
 
 nick("Andrej Šarac", "Cjoffo").
 entry_year("Andrej Šarac", 2020).
+image("Andrej Šarac", "https://liquipedia.net/commons/images/a/a3/Z10_Cjoffo_2022.png").
                      
 age("Andrej Šarac", 19).
 birth_month("Andrej Šarac", "July").
@@ -5723,6 +5913,7 @@ vice("Andrej Šarac", "Telekom eSports Championship Season 1", "Zero Tenacity").
 
 nick("Nemanja Đukić", "nEMANHA").
 entry_year("Nemanja Đukić", 2013).
+image("Nemanja Đukić", "https://liquipedia.net/commons/images/4/4c/Z10_nEMANHA_2022.png").
                      
 age("Nemanja Đukić", 26).
 birth_month("Nemanja Đukić", "September").
@@ -5748,6 +5939,7 @@ vice("Nemanja Đukić", "Telekom eSports Championship Season 1", "Zero Tenacity"
 
 nick("Filip Belojica", "aVN").
 entry_year("Filip Belojica", 2016).
+image("Filip Belojica", "https://liquipedia.net/commons/images/7/7a/Z10_aVN_2022.png").
                      
 age("Filip Belojica", 27).
 birth_month("Filip Belojica", "January").
@@ -5782,6 +5974,7 @@ champion("Filip Belojica", "Belgrade Open #3", "BLUEJAYS International").
 
 nick("Filip Konatarević", "fajkus").
 entry_year("Filip Konatarević", 2015).
+image("Filip Konatarević", "https://liquipedia.net/commons/images/1/11/Z10_fajkus_2022.png").
                      
 age("Filip Konatarević", 35).
 birth_month("Filip Konatarević", "February").
@@ -5805,6 +5998,7 @@ vice("Filip Konatarević", "Belgrade Open #2", "Lunacy").
 
 nick("Denis Valeryevich Kostin", "seized").
 entry_year("Denis Valeryevich Kostin", 2009).
+image("Denis Valeryevich Kostin", "https://liquipedia.net/commons/images/thumb/e/e6/Seized_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Seized_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Denis Valeryevich Kostin", 29).
 birth_month("Denis Valeryevich Kostin", "September").
@@ -5859,6 +6053,7 @@ vice("Denis Valeryevich Kostin", "DreamHack Open Cluj⁠-⁠Napoca 2015", "Natus
 
 nick("Daniil Kustov", "d1Ledez").
 entry_year("Daniil Kustov", 2020).
+image("Daniil Kustov", "https://liquipedia.net/commons/images/thumb/8/87/D1Ledez_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-D1Ledez_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Daniil Kustov", 20).
 birth_month("Daniil Kustov", "July").
@@ -5880,6 +6075,7 @@ champion("Daniil Kustov", "ESEA Cash Cup: Europe - Winter 2021 #1", "Team Singul
 
 nick("Timur Sabirov", "clax").
 entry_year("Timur Sabirov", 2016).
+image("Timur Sabirov", "https://liquipedia.net/commons/images/thumb/8/82/Clax_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Clax_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Timur Sabirov", 21).
 birth_month("Timur Sabirov", "June").
@@ -5907,6 +6103,7 @@ vice("Timur Sabirov", "CTRL PLAY LEAGUE", "Cyber Legacy").
 
 nick("Artyom Egorov", "iDISBALANCE").
 entry_year("Artyom Egorov", 2017).
+image("Artyom Egorov", "https://liquipedia.net/commons/images/thumb/c/c2/IDISBALANCE_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-IDISBALANCE_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Artyom Egorov", 27).
 birth_month("Artyom Egorov", "December").
@@ -5940,6 +6137,7 @@ vice("Artyom Egorov", "ESEA Season 31: Global Challenge", "Team Spirit").
 
 nick("Aleksandr Matsiyevich", "glowiing").
 entry_year("Aleksandr Matsiyevich", 2018).
+image("Aleksandr Matsiyevich", "https://liquipedia.net/commons/images/thumb/d/d6/Glowiing_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Glowiing_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Aleksandr Matsiyevich", 30).
 birth_month("Aleksandr Matsiyevich", "December").
@@ -5970,6 +6168,7 @@ vice("Aleksandr Matsiyevich", "Malta Vibes Knockout Series #3", "1win").
 
 nick("Andrey Mironenko", "XomA").
 entry_year("Andrey Mironenko", 2004).
+image("Andrey Mironenko", "https://liquipedia.net/commons/images/thumb/1/12/XomA_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-XomA_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Andrey Mironenko", 32).
 birth_month("Andrey Mironenko", "June").
@@ -6009,6 +6208,7 @@ vice("Andrey Mironenko", "ASUS Open Winter 2007", "forZe").
 
 nick("Timur Abdullin", "DSSj").
 entry_year("Timur Abdullin", 2018).
+image("Timur Abdullin", "https://liquipedia.net/commons/images/thumb/a/ad/ARCRED_DSSj_2023.png/600px-ARCRED_DSSj_2023.png").
                      
 age("Timur Abdullin", 25).
 birth_month("Timur Abdullin", "March").
@@ -6031,6 +6231,7 @@ vice("Timur Abdullin", "SCL Season 7: Challenger Division", "ARCRED").
 
 nick("Danila Simagin", "1NVISIBLEE").
 entry_year("Danila Simagin", 2019).
+image("Danila Simagin", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Danila Simagin", 21).
 birth_month("Danila Simagin", "March").
@@ -6054,6 +6255,7 @@ vice("Danila Simagin", "FRAG Season 7", "ARCRED").
 
 nick("Artem Shaginyan", "shg").
 entry_year("Artem Shaginyan", 2020).
+image("Artem Shaginyan", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Artem Shaginyan", 22).
 birth_month("Artem Shaginyan", "July").
@@ -6074,6 +6276,7 @@ vice("Artem Shaginyan", "Russian Esports Cup 2022", "xdddd").
 
 nick("Danyyl Mazur", "synyx").
 entry_year("Danyyl Mazur", 2020).
+image("Danyyl Mazur", "https://liquipedia.net/commons/images/thumb/5/51/Synyx.png/600px-Synyx.png").
                      
 age("Danyyl Mazur", 19).
 birth_month("Danyyl Mazur", "August").
@@ -6103,6 +6306,7 @@ vice("Danyyl Mazur", "Malta Vibes Knockout Series #6", "1shot").
 
 nick("Evgeniy Smakilo", "Get_Jeka").
 entry_year("Evgeniy Smakilo", 2017).
+image("Evgeniy Smakilo", "https://liquipedia.net/commons/images/thumb/e/e7/Get_Jeka.png/600px-Get_Jeka.png").
                      
 age("Evgeniy Smakilo", 21).
 birth_month("Evgeniy Smakilo", "June").
@@ -6136,6 +6340,7 @@ vice("Evgeniy Smakilo", "Malta Vibes Knockout Series #6", "1shot").
 
 nick("Dmitriy Mikhaylichenko", "iksou").
 entry_year("Dmitriy Mikhaylichenko", 2009).
+image("Dmitriy Mikhaylichenko", "https://liquipedia.net/commons/images/thumb/3/31/Iksou_Moche_XL_Esports_2018.jpg/600px-Iksou_Moche_XL_Esports_2018.jpg").
                      
 age("Dmitriy Mikhaylichenko", 42).
 birth_month("Dmitriy Mikhaylichenko", "May").
@@ -6161,6 +6366,7 @@ champion("Dmitriy Mikhaylichenko", "Uprise Champions Cup Season 3: Group Stage",
 
 nick("Viktor Boldyrev", "Lack1").
 entry_year("Viktor Boldyrev", 2017).
+image("Viktor Boldyrev", "https://liquipedia.net/commons/images/thumb/4/47/Lack1_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Lack1_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Viktor Boldyrev", 24).
 birth_month("Viktor Boldyrev", "August").
@@ -6195,6 +6401,7 @@ vice("Viktor Boldyrev", "V4 Future Sports Festival - Budapest 2021", "Entropiq")
 
 nick("Evgeniy Ermolin", "Norwi").
 entry_year("Evgeniy Ermolin", 2019).
+image("Evgeniy Ermolin", "https://liquipedia.net/commons/images/thumb/0/0c/Norwi_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Norwi_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Evgeniy Ermolin", 22).
 birth_month("Evgeniy Ermolin", "March").
@@ -6224,6 +6431,7 @@ vice("Evgeniy Ermolin", "BetBoom Playlist. Freedom", "Aurora Gaming").
 
 nick("Aleksandr Gurkin", "KENSI").
 entry_year("Aleksandr Gurkin", 2019).
+image("Aleksandr Gurkin", "https://liquipedia.net/commons/images/thumb/a/aa/KENSI_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-KENSI_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Aleksandr Gurkin", 22).
 birth_month("Aleksandr Gurkin", "November").
@@ -6254,6 +6462,7 @@ vice("Aleksandr Gurkin", "BetBoom Playlist. Freedom", "Aurora Gaming").
 
 nick("Denis Zhukov", "deko").
 entry_year("Denis Zhukov", 2017).
+image("Denis Zhukov", "https://liquipedia.net/commons/images/thumb/5/5b/Deko_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Deko_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Denis Zhukov", 22).
 birth_month("Denis Zhukov", "July").
@@ -6282,6 +6491,7 @@ vice("Denis Zhukov", "ESL Challenger League Season 40: Europe", "1win").
 
 nick("Temirlan Nurmagamet", "TNDKingg").
 entry_year("Temirlan Nurmagamet", 2019).
+image("Temirlan Nurmagamet", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Temirlan Nurmagamet", 22).
 birth_month("Temirlan Nurmagamet", "March").
@@ -6307,6 +6517,7 @@ vice("Temirlan Nurmagamet", "Legion Mid Asia Cup", "Tengri").
 
 nick("Sanzhar Talgat", "def1zer").
 entry_year("Sanzhar Talgat", 2021).
+image("Sanzhar Talgat", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Sanzhar Talgat", 19).
 birth_month("Sanzhar Talgat", "June").
@@ -6330,6 +6541,7 @@ vice("Sanzhar Talgat", "European Development Championship Season 6", "K23").
 
 nick("Daulet Ondassynov", "BLVCKM4GIC").
 entry_year("Daulet Ondassynov", 2020).
+image("Daulet Ondassynov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Daulet Ondassynov", 19).
 birth_month("Daulet Ondassynov", "June").
@@ -6353,6 +6565,7 @@ vice("Daulet Ondassynov", "Beske Bes 2023", "AVANGAR").
 
 nick("Vladislav Gorshkov", "nafany").
 entry_year("Vladislav Gorshkov", 2017).
+image("Vladislav Gorshkov", "https://liquipedia.net/commons/images/thumb/9/9a/Nafany_at_IEM_Katowice_2024.jpg/600px-Nafany_at_IEM_Katowice_2024.jpg").
                      
 age("Vladislav Gorshkov", 22).
 birth_month("Vladislav Gorshkov", "June").
@@ -6384,6 +6597,7 @@ vice("Vladislav Gorshkov", "BLAST Premier: World Final 2021", "Gambit Esports").
 
 nick("Aleksandr Anashkin", "Error").
 entry_year("Aleksandr Anashkin", 2020).
+image("Aleksandr Anashkin", "https://liquipedia.net/commons/images/thumb/4/41/KaiR0N-_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-KaiR0N-_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Aleksandr Anashkin", 20).
 birth_month("Aleksandr Anashkin", "January").
@@ -6408,11 +6622,11 @@ champion("Aleksandr Anashkin", "PARI After Rio LAN", "Boston crab").
 champion("Aleksandr Anashkin", "PARI White Night LAN", "INDE IRAE").
 champion("Aleksandr Anashkin", "Dell Gaming Academy Season 2", "DNG").
 champion("Aleksandr Anashkin", "Rive: Winter Rush", "ex-Ethereal").
-vice("Aleksandr Anashkin", "Dell Gaming League Season 1", "ex-Ethereal").
 
 
 nick("Pavel Ogloblin", "s1ren").
 entry_year("Pavel Ogloblin", 2018).
+image("Pavel Ogloblin", "https://liquipedia.net/commons/images/thumb/6/65/S1ren_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-S1ren_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Pavel Ogloblin", 21).
 birth_month("Pavel Ogloblin", "July").
@@ -6436,6 +6650,7 @@ vice("Pavel Ogloblin", "ESL Challenger League Season 43: Europe", "Team Spirit")
 
 nick("Aleksandr Zagodyrenko", "zorte").
 entry_year("Aleksandr Zagodyrenko", 2017).
+image("Aleksandr Zagodyrenko", "https://liquipedia.net/commons/images/thumb/3/39/Zorte_at_IEM_Katowice_2024.jpg/600px-Zorte_at_IEM_Katowice_2024.jpg").
                      
 age("Aleksandr Zagodyrenko", 25).
 birth_month("Aleksandr Zagodyrenko", "May").
@@ -6466,6 +6681,7 @@ vice("Aleksandr Zagodyrenko", "BetBoom Playlist. Urbanistic", "FORZE Esports").
 
 nick("Danil Roslyakov", "danistzz").
 entry_year("Danil Roslyakov", 2021).
+image("Danil Roslyakov", "https://liquipedia.net/commons/images/thumb/8/8b/Danistzz_at_IEM_Katowice_2024.jpg/600px-Danistzz_at_IEM_Katowice_2024.jpg").
                      
 age("Danil Roslyakov", 21).
 birth_month("Danil Roslyakov", "July").
@@ -6487,6 +6703,7 @@ vice("Danil Roslyakov", "FASTCUP Grand Tour #2", "BakS eSports").
 
 nick("Alaksandr Nizhnik", "sad").
 entry_year("Alaksandr Nizhnik", 2020).
+image("Alaksandr Nizhnik", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Alaksandr Nizhnik", 20).
 birth_month("Alaksandr Nizhnik", "March").
@@ -6511,6 +6728,7 @@ vice("Alaksandr Nizhnik", "Forward Cup", "Iron Branch").
 
 nick("Svyatoslav Masko", "MaSvAl").
 entry_year("Svyatoslav Masko", 2020).
+image("Svyatoslav Masko", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Svyatoslav Masko", 21).
 birth_month("Svyatoslav Masko", "January").
@@ -6536,6 +6754,7 @@ vice("Svyatoslav Masko", "Forward Cup", "Iron Branch").
 
 nick("Dmytro Tediashvili", "nifee").
 entry_year("Dmytro Tediashvili", 2021).
+image("Dmytro Tediashvili", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Dmytro Tediashvili", 19).
 birth_month("Dmytro Tediashvili", "April").
@@ -6558,6 +6777,7 @@ vice("Dmytro Tediashvili", "ESEA Cash Cup: Europe - Autumn 2022 #4", "Iron Branc
 
 nick("Igor Solodkov", "lollipop21k").
 entry_year("Igor Solodkov", 2016).
+image("Igor Solodkov", "https://liquipedia.net/commons/images/8/81/Websterz_lollipop21k_2023.png").
                      
 age("Igor Solodkov", 27).
 birth_month("Igor Solodkov", "June").
@@ -6591,6 +6811,7 @@ vice("Igor Solodkov", "ESEA Season 34: Premier Division - Europe", "Nemiga Gamin
 
 nick("Aleksei Yarmoshchuk", "alex666").
 entry_year("Aleksei Yarmoshchuk", 2020).
+image("Aleksei Yarmoshchuk", "https://liquipedia.net/commons/images/thumb/7/7e/Alex666_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-Alex666_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Aleksei Yarmoshchuk", 22).
 birth_month("Aleksei Yarmoshchuk", "August").
@@ -6624,6 +6845,7 @@ vice("Aleksei Yarmoshchuk", "ESEA Cash Cup: Europe - Summer 2021 #6", "okura").
 
 nick("Dmytro Chervak", "jR").
 entry_year("Dmytro Chervak", 2014).
+image("Dmytro Chervak", "https://liquipedia.net/commons/images/thumb/1/1d/JR.jpg/600px-JR.jpg").
                      
 age("Dmytro Chervak", 30).
 birth_month("Dmytro Chervak", "October").
@@ -6659,6 +6881,7 @@ vice("Dmytro Chervak", "StarSeries & i-League CS:GO Season 6", "Vega Squadron").
 
 nick("Sergey Aleksandrovich Rykhtorov", "Ax1Le").
 entry_year("Sergey Aleksandrovich Rykhtorov", 2018).
+image("Sergey Aleksandrovich Rykhtorov", "https://liquipedia.net/commons/images/thumb/0/02/Ax1Le_at_IEM_Katowice_2024.jpg/600px-Ax1Le_at_IEM_Katowice_2024.jpg").
                      
 age("Sergey Aleksandrovich Rykhtorov", 21).
 birth_month("Sergey Aleksandrovich Rykhtorov", "April").
@@ -6687,6 +6910,7 @@ vice("Sergey Aleksandrovich Rykhtorov", "BLAST Premier: World Final 2021", "Gamb
 
 nick("Abay Khassenov", "HObbit").
 entry_year("Abay Khassenov", 2014).
+image("Abay Khassenov", "https://liquipedia.net/commons/images/thumb/d/d6/Hobbit_at_IEM_Katowice_2024.jpg/600px-Hobbit_at_IEM_Katowice_2024.jpg").
                      
 age("Abay Khassenov", 29).
 birth_month("Abay Khassenov", "May").
@@ -6720,6 +6944,7 @@ vice("Abay Khassenov", "BLAST Premier: World Final 2021", "Gambit Esports").
 
 nick("Denis Railevich Sharipov", "electroNic").
 entry_year("Denis Railevich Sharipov", 2015).
+image("Denis Railevich Sharipov", "https://liquipedia.net/commons/images/thumb/6/66/ElectroNic_at_IEM_Katowice_2024.jpg/600px-ElectroNic_at_IEM_Katowice_2024.jpg").
                      
 age("Denis Railevich Sharipov", 25).
 birth_month("Denis Railevich Sharipov", "September").
@@ -6757,6 +6982,7 @@ champion("Denis Railevich Sharipov", "StarSeries & i-League CS:GO Season 7", "Na
 
 nick("Ilya Zalutskiy", "Perfecto").
 entry_year("Ilya Zalutskiy", 2018).
+image("Ilya Zalutskiy", "https://liquipedia.net/commons/images/thumb/a/a1/Perfecto_at_IEM_Katowice_2024.jpg/600px-Perfecto_at_IEM_Katowice_2024.jpg").
                      
 age("Ilya Zalutskiy", 24).
 birth_month("Ilya Zalutskiy", "November").
@@ -6788,6 +7014,7 @@ vice("Ilya Zalutskiy", "Intel Extreme Masters XVII - Cologne", "Natus Vincere").
 
 nick("Kirill Sergeyevich Mikhaylov", "Boombl4").
 entry_year("Kirill Sergeyevich Mikhaylov", 2016).
+image("Kirill Sergeyevich Mikhaylov", "https://liquipedia.net/commons/images/thumb/1/1a/Boombl4_at_IEM_Katowice_2024.jpg/600px-Boombl4_at_IEM_Katowice_2024.jpg").
                      
 age("Kirill Sergeyevich Mikhaylov", 25).
 birth_month("Kirill Sergeyevich Mikhaylov", "December").
@@ -6820,6 +7047,7 @@ vice("Kirill Sergeyevich Mikhaylov", "PGL Major Antwerp 2022", "Natus Vincere").
 
 nick("Konstantin Pikiner", "groove").
 entry_year("Konstantin Pikiner", 2003).
+image("Konstantin Pikiner", "https://liquipedia.net/commons/images/thumb/2/25/Groove_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Groove_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Konstantin Pikiner", 41).
 birth_month("Konstantin Pikiner", "March").
@@ -6856,6 +7084,7 @@ vice("Konstantin Pikiner", "WCG Russia National Championship 2003", "emax").
 
 nick("Aleksandr Marenov", "shalfey").
 entry_year("Aleksandr Marenov", 2018).
+image("Aleksandr Marenov", "https://liquipedia.net/commons/images/thumb/4/42/Shalfey_at_CCT_Central_Europe_Malta_Finals.jpg/600px-Shalfey_at_CCT_Central_Europe_Malta_Finals.jpg").
                      
 age("Aleksandr Marenov", 21).
 birth_month("Aleksandr Marenov", "June").
@@ -6884,6 +7113,7 @@ vice("Aleksandr Marenov", "BetBoom Playlist. Urbanistic", "FORZE Esports").
 
 nick("Evgeniy Alekseevich Frolov", "r3salt").
 entry_year("Evgeniy Alekseevich Frolov", 2020).
+image("Evgeniy Alekseevich Frolov", "https://liquipedia.net/commons/images/thumb/b/b8/R3salt_at_Russian_Cybersport_League_2023.jpg/600px-R3salt_at_Russian_Cybersport_League_2023.jpg").
                      
 age("Evgeniy Alekseevich Frolov", 19).
 birth_month("Evgeniy Alekseevich Frolov", "February").
@@ -6904,6 +7134,7 @@ vice("Evgeniy Alekseevich Frolov", "Winline Insight Season 2", "VP.Prodigy").
 
 nick("Andrey Tatarinovich", "tN1R").
 entry_year("Andrey Tatarinovich", 2019).
+image("Andrey Tatarinovich", "https://liquipedia.net/commons/images/2/2e/Websterz_tN1R_2022.png").
                      
 age("Andrey Tatarinovich", 23).
 birth_month("Andrey Tatarinovich", "February").
@@ -6933,6 +7164,7 @@ vice("Andrey Tatarinovich", "ESEA Season 42: Main Division - Europe", "GoodJob")
 
 nick("Erkhan Bagynanov", "gokushima").
 entry_year("Erkhan Bagynanov", 2021).
+image("Erkhan Bagynanov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Erkhan Bagynanov", 23).
 birth_month("Erkhan Bagynanov", "August").
@@ -6957,6 +7189,7 @@ vice("Erkhan Bagynanov", "Hydra Cup #3", "HOTU").
 
 nick("Ivan Miroshnikov", "SELLTER").
 entry_year("Ivan Miroshnikov", 2018).
+image("Ivan Miroshnikov", "https://liquipedia.net/commons/images/thumb/d/d4/SELLTER_at_BLAST_Paris_Major_2023_EU_RMR.jpeg/600px-SELLTER_at_BLAST_Paris_Major_2023_EU_RMR.jpeg").
                      
 age("Ivan Miroshnikov", 21).
 birth_month("Ivan Miroshnikov", "February").
@@ -6987,6 +7220,7 @@ vice("Ivan Miroshnikov", "CCT North Europe Series #3", "Aurora Gaming").
 
 nick("Аrtem Ivanov", "Fierce").
 entry_year("Аrtem Ivanov", 2009).
+image("Аrtem Ivanov", "https://liquipedia.net/commons/images/thumb/a/a4/Fierce_at_CCT_Central_Europe_Malta_Finals.jpg/600px-Fierce_at_CCT_Central_Europe_Malta_Finals.jpg").
                      
 age("Аrtem Ivanov", 34).
 birth_month("Аrtem Ivanov", "November").
@@ -7012,6 +7246,7 @@ champion("Аrtem Ivanov", "IEM V - Regular Season", "Iron Will").
 
 nick("Oleg Pranenko", "weqt2").
 entry_year("Oleg Pranenko", 2022).
+image("Oleg Pranenko", "https://liquipedia.net/commons/images/thumb/b/b3/Weqt2.png/600px-Weqt2.png").
                      
 age("Oleg Pranenko", 24).
 birth_month("Oleg Pranenko", "March").
@@ -7036,6 +7271,7 @@ champion("Oleg Pranenko", "ESEA Cash Cup: Asia - Winter 2023 #2", "GR Gaming").
 
 nick("Roman Stetsenko", "mediocrity").
 entry_year("Roman Stetsenko", 2022).
+image("Roman Stetsenko", "https://liquipedia.net/commons/images/b/bb/Mediocrity.png").
                      
 age("Roman Stetsenko", 23).
 birth_month("Roman Stetsenko", "July").
@@ -7060,6 +7296,7 @@ champion("Roman Stetsenko", "ESEA Cash Cup: Asia - Winter 2023 #2", "GR Gaming")
 
 nick("Ivan Ivlev", "qqGOD").
 entry_year("Ivan Ivlev", 2020).
+image("Ivan Ivlev", "https://liquipedia.net/commons/images/thumb/f/f5/Qqgod_russian.png/600px-Qqgod_russian.png").
                      
 age("Ivan Ivlev", 21).
 birth_month("Ivan Ivlev", "July").
@@ -7087,6 +7324,7 @@ vice("Ivan Ivlev", "5E Arena Open Season 4: East Asia", "CyberX Khabarovsk").
 
 nick("Arkadiy Balanda", "SALO_MUX").
 entry_year("Arkadiy Balanda", 2022).
+image("Arkadiy Balanda", "https://liquipedia.net/commons/images/thumb/1/10/SALO_MUX.png/600px-SALO_MUX.png").
                      
 age("Arkadiy Balanda", 27).
 birth_month("Arkadiy Balanda", "October").
@@ -7114,6 +7352,7 @@ champion("Arkadiy Balanda", "ESEA Cash Cup: Asia - Winter 2023 #2", "GR Gaming")
 
 nick("Nurgun Avvakumov", "swiftsteel").
 entry_year("Nurgun Avvakumov", 2020).
+image("Nurgun Avvakumov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Nurgun Avvakumov", 30).
 birth_month("Nurgun Avvakumov", "September").
@@ -7137,6 +7376,7 @@ vice("Nurgun Avvakumov", "Hydra Cup #3", "HOTU").
 
 nick("Aleksandr Kornilov", "casE").
 entry_year("Aleksandr Kornilov", 2019).
+image("Aleksandr Kornilov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Aleksandr Kornilov", 27).
 birth_month("Aleksandr Kornilov", "August").
@@ -7159,6 +7399,7 @@ vice("Aleksandr Kornilov", "Hydra Cup #1", "M_AMAZING").
 
 nick("Dmitry Kondratev", "mizu").
 entry_year("Dmitry Kondratev", 2020).
+image("Dmitry Kondratev", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Dmitry Kondratev", 20).
 birth_month("Dmitry Kondratev", "January").
@@ -7180,6 +7421,7 @@ vice("Dmitry Kondratev", "Hydra Cup #3", "HOTU").
 
 nick("Aleksej Zlatkovskij", "znxxX").
 entry_year("Aleksej Zlatkovskij", 2019).
+image("Aleksej Zlatkovskij", "https://liquipedia.net/commons/images/2/24/Websterz_znxxX_2022.png").
                      
 age("Aleksej Zlatkovskij", 22).
 birth_month("Aleksej Zlatkovskij", "August").
@@ -7207,6 +7449,7 @@ vice("Aleksej Zlatkovskij", "BLAST Rising 2021", "Team Spirit Academy").
 
 nick("Artem Ivankin", "Pipw").
 entry_year("Artem Ivankin", 2021).
+image("Artem Ivankin", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Artem Ivankin", 21).
 birth_month("Artem Ivankin", "May").
@@ -7227,6 +7470,7 @@ vice("Artem Ivankin", "Ultras League Season 8", "Diffendo").
 
 nick("Vadim Tsirov", "Polt").
 entry_year("Vadim Tsirov", 2018).
+image("Vadim Tsirov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Vadim Tsirov", 29).
 birth_month("Vadim Tsirov", "June").
@@ -7257,6 +7501,7 @@ vice("Vadim Tsirov", "Malta Vibes Knockout Series #3", "1win").
 
 nick("Dmitriy Sofronov", "FpSSS").
 entry_year("Dmitriy Sofronov", 2019).
+image("Dmitriy Sofronov", "https://liquipedia.net/commons/images/thumb/0/05/FpSSS.png/600px-FpSSS.png").
                      
 age("Dmitriy Sofronov", 25).
 birth_month("Dmitriy Sofronov", "March").
@@ -7285,6 +7530,7 @@ vice("Dmitriy Sofronov", "Let'sGO ULTIMIGHT Series #1", "1shot").
 
 nick("Yuriy Martirosov", "faydett").
 entry_year("Yuriy Martirosov", 2020).
+image("Yuriy Martirosov", "https://liquipedia.net/commons/images/6/62/Faydett.png").
                      
 age("Yuriy Martirosov", 24).
 birth_month("Yuriy Martirosov", "April").
@@ -7315,6 +7561,7 @@ vice("Yuriy Martirosov", "Let'sGO ULTIMIGHT Series #1", "1shot").
 
 nick("Amin Azimov", "sugaR").
 entry_year("Amin Azimov", 2019).
+image("Amin Azimov", "https://liquipedia.net/commons/images/thumb/e/ea/SugaR_at_IEM_Rio_Major_2022_EU_RMR.png/600px-SugaR_at_IEM_Rio_Major_2022_EU_RMR.png").
                      
 age("Amin Azimov", 25).
 birth_month("Amin Azimov", "January").
@@ -7340,6 +7587,7 @@ vice("Amin Azimov", "Winline Insight Season 1", "AVE").
 
 nick("Äset Sembiev", "Solaar").
 entry_year("Äset Sembiev", 2016).
+image("Äset Sembiev", "https://liquipedia.net/commons/images/thumb/0/0a/Solaar_StarLadder_Berlin_CIS_Minor_2019.jpg/600px-Solaar_StarLadder_Berlin_CIS_Minor_2019.jpg").
                      
 age("Äset Sembiev", 37).
 birth_month("Äset Sembiev", "January").
@@ -7360,6 +7608,7 @@ vice("Äset Sembiev", "World Cyber Games 2005", "k23").
 
 nick("Aleksandr Nahornyj", "1eeR").
 entry_year("Aleksandr Nahornyj", 2020).
+image("Aleksandr Nahornyj", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Aleksandr Nahornyj", 22).
 birth_month("Aleksandr Nahornyj", "December").
@@ -7385,6 +7634,7 @@ vice("Aleksandr Nahornyj", "INSANE FASTCUP #1", "Nemiga Gaming").
 
 nick("Timur Maryev", "FL4MUS").
 entry_year("Timur Maryev", 2020).
+image("Timur Maryev", "https://liquipedia.net/commons/images/thumb/c/c8/FL4MUS_at_PARI_After_Rio_LAN.png/600px-FL4MUS_at_PARI_After_Rio_LAN.png").
                      
 age("Timur Maryev", 19).
 birth_month("Timur Maryev", "August").
@@ -7416,6 +7666,7 @@ vice("Timur Maryev", "BLAST Rising 2021", "Team Spirit Academy").
 
 nick("Maksim Churikov", "riskyb0b").
 entry_year("Maksim Churikov", 2020).
+image("Maksim Churikov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Maksim Churikov", 21).
 birth_month("Maksim Churikov", "September").
@@ -7447,6 +7698,7 @@ vice("Maksim Churikov", "PARI Patriki Vibe LAN", "RCL").
 
 nick("Kirill Kononov", "Xant3r").
 entry_year("Kirill Kononov", 2021).
+image("Kirill Kononov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Kirill Kononov", 19).
 birth_month("Kirill Kononov", "March").
@@ -7471,6 +7723,7 @@ vice("Kirill Kononov", "ESEA Cash Cup: Europe - Autumn 2023 #4", "Insilio").
 
 nick("Anton Burko", "boX").
 entry_year("Anton Burko", 2016).
+image("Anton Burko", "https://liquipedia.net/commons/images/7/75/Websterz_boX_2022.png").
                      
 age("Anton Burko", 29).
 birth_month("Anton Burko", "February").
@@ -7503,6 +7756,7 @@ vice("Anton Burko", "ESEA Season 34: Premier Division - Europe", "Nemiga Gaming"
 
 nick("Leonid Vishnyakov", "chopper").
 entry_year("Leonid Vishnyakov", 2013).
+image("Leonid Vishnyakov", "https://liquipedia.net/commons/images/thumb/d/d6/Chopper_at_IEM_Katowice_2024.jpg/600px-Chopper_at_IEM_Katowice_2024.jpg").
                      
 age("Leonid Vishnyakov", 27).
 birth_month("Leonid Vishnyakov", "February").
@@ -7541,6 +7795,7 @@ vice("Leonid Vishnyakov", "StarSeries & i-League CS:GO Season 6", "Vega Squadron
 
 nick("Boris Vorobyev", "magixx").
 entry_year("Boris Vorobyev", 2018).
+image("Boris Vorobyev", "https://liquipedia.net/commons/images/thumb/2/2a/Magixx_at_IEM_Katowice_2024.jpg/600px-Magixx_at_IEM_Katowice_2024.jpg").
                      
 age("Boris Vorobyev", 20).
 birth_month("Boris Vorobyev", "June").
@@ -7564,6 +7819,7 @@ vice("Boris Vorobyev", "Champions Cup Finals", "Team Spirit").
 
 nick("Myroslav Plakhotja", "zont1x").
 entry_year("Myroslav Plakhotja", 2020).
+image("Myroslav Plakhotja", "https://liquipedia.net/commons/images/thumb/c/c3/Zont1x_at_IEM_Katowice_2024.jpg/600px-Zont1x_at_IEM_Katowice_2024.jpg").
                      
 age("Myroslav Plakhotja", 18).
 birth_month("Myroslav Plakhotja", "July").
@@ -7588,6 +7844,7 @@ vice("Myroslav Plakhotja", "WePlay Academy League Season 5", "Team Spirit Academ
 
 nick("Danil Kryshkovets", "donk").
 entry_year("Danil Kryshkovets", 2021).
+image("Danil Kryshkovets", "https://liquipedia.net/commons/images/thumb/4/4b/Donk_at_IEM_Katowice_2024.jpg/600px-Donk_at_IEM_Katowice_2024.jpg").
                      
 age("Danil Kryshkovets", 17).
 birth_month("Danil Kryshkovets", "January").
@@ -7613,6 +7870,7 @@ vice("Danil Kryshkovets", "WePlay Academy League Season 5", "Team Spirit Academy
 
 nick("Dmitriy Eduardovich Sokolov", "sh1ro").
 entry_year("Dmitriy Eduardovich Sokolov", 2018).
+image("Dmitriy Eduardovich Sokolov", "https://liquipedia.net/commons/images/thumb/9/93/Sh1ro_at_IEM_Katowice_2024.jpg/600px-Sh1ro_at_IEM_Katowice_2024.jpg").
                      
 age("Dmitriy Eduardovich Sokolov", 22).
 birth_month("Dmitriy Eduardovich Sokolov", "July").
@@ -7643,6 +7901,7 @@ vice("Dmitriy Eduardovich Sokolov", "BLAST Premier: World Final 2021", "Gambit E
 
 nick("Sergey Shavayev", "hally").
 entry_year("Sergey Shavayev", 2007).
+image("Sergey Shavayev", "https://liquipedia.net/commons/images/thumb/0/02/Hally_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Hally_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Sergey Shavayev", 30).
 birth_month("Sergey Shavayev", "July").
@@ -7667,6 +7926,7 @@ champion("Sergey Shavayev", "New Year's Show Tournament 2010", "USSR Team").
 
 nick("Amirbek Timurov", "wetfy").
 entry_year("Amirbek Timurov", 2021).
+image("Amirbek Timurov", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Amirbek Timurov", 19).
 birth_month("Amirbek Timurov", "April").
@@ -7690,6 +7950,7 @@ vice("Amirbek Timurov", "FRAG Club Tournament Season 2", "TRAFFIC Tashkent Team"
 
 nick("Abdukadirov Ibrakhim", "kanshineF").
 entry_year("Abdukadirov Ibrakhim", 2021).
+image("Abdukadirov Ibrakhim", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Abdukadirov Ibrakhim", 25).
 birth_month("Abdukadirov Ibrakhim", "April").
@@ -7712,6 +7973,7 @@ vice("Abdukadirov Ibrakhim", "FRAG Club Tournament Season 2", "TRAFFIC Tashkent 
 
 nick("Dzhami Ali", "Jame").
 entry_year("Dzhami Ali", 2017).
+image("Dzhami Ali", "https://liquipedia.net/commons/images/thumb/6/6f/Jame_at_IEM_Katowice_2024.jpg/600px-Jame_at_IEM_Katowice_2024.jpg").
                      
 age("Dzhami Ali", 25).
 birth_month("Dzhami Ali", "August").
@@ -7742,6 +8004,7 @@ vice("Dzhami Ali", "StarLadder Berlin Major 2019", "AVANGAR").
 
 nick("Evgeniy Lebedev", "FL1T").
 entry_year("Evgeniy Lebedev", 2016).
+image("Evgeniy Lebedev", "https://liquipedia.net/commons/images/thumb/4/45/FL1T_at_IEM_Katowice_2024.jpg/600px-FL1T_at_IEM_Katowice_2024.jpg").
                      
 age("Evgeniy Lebedev", 23).
 birth_month("Evgeniy Lebedev", "December").
@@ -7769,6 +8032,7 @@ vice("Evgeniy Lebedev", "Thunderpick World Championship 2023", "Virtus.pro").
 
 nick("Petr Bolyshev", "fame").
 entry_year("Petr Bolyshev", 2019).
+image("Petr Bolyshev", "https://liquipedia.net/commons/images/thumb/d/d7/Fame_at_IEM_Katowice_2024.jpg/600px-Fame_at_IEM_Katowice_2024.jpg").
                      
 age("Petr Bolyshev", 21).
 birth_month("Petr Bolyshev", "March").
@@ -7794,6 +8058,7 @@ vice("Petr Bolyshev", "Thunderpick World Championship 2023", "Virtus.pro").
 
 nick("David Daniyelyan", "n0rb3r7").
 entry_year("David Daniyelyan", 2017).
+image("David Daniyelyan", "https://liquipedia.net/commons/images/thumb/7/78/N0rb3r7_at_IEM_Katowice_2024.jpg/600px-N0rb3r7_at_IEM_Katowice_2024.jpg").
                      
 age("David Daniyelyan", 22).
 birth_month("David Daniyelyan", "March").
@@ -7826,6 +8091,7 @@ vice("David Daniyelyan", "Thunderpick World Championship 2023", "Virtus.pro").
 
 nick("Nikolay Bityukov", "mir").
 entry_year("Nikolay Bityukov", 2015).
+image("Nikolay Bityukov", "https://liquipedia.net/commons/images/thumb/f/f0/Mir_at_IEM_Katowice_2024.jpg/600px-Mir_at_IEM_Katowice_2024.jpg").
                      
 age("Nikolay Bityukov", 28).
 birth_month("Nikolay Bityukov", "January").
@@ -7864,6 +8130,7 @@ vice("Nikolay Bityukov", "Thunderpick World Championship 2023", "Virtus.pro").
 
 nick("Dastan Akbayev", "dastan").
 entry_year("Dastan Akbayev", 2011).
+image("Dastan Akbayev", "https://liquipedia.net/commons/images/thumb/5/5d/Dastan_at_Copenhagen_Major_2024_EU_RMR.jpg/600px-Dastan_at_Copenhagen_Major_2024_EU_RMR.jpg").
                      
 age("Dastan Akbayev", 30).
 birth_month("Dastan Akbayev", "August").
@@ -7892,6 +8159,7 @@ vice("Dastan Akbayev", "Arbalet Cup Almaty 2010 #1", "A-TEAM").
 
 nick("Matthew Whitmore", "Cryptic").
 entry_year("Matthew Whitmore", 2017).
+image("Matthew Whitmore", "https://liquipedia.net/commons/images/thumb/d/d7/Cryptic_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Cryptic_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Matthew Whitmore", 23).
 birth_month("Matthew Whitmore", "February").
@@ -7926,6 +8194,7 @@ vice("Matthew Whitmore", "ESL Challenger League Season 46: North America", "BOSS
 
 nick("Adam Paterson", "freshie").
 entry_year("Adam Paterson", 2019).
+image("Adam Paterson", "https://liquipedia.net/commons/images/thumb/6/6f/Freshie_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Freshie_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Adam Paterson", 21).
 birth_month("Adam Paterson", "April").
@@ -7960,6 +8229,7 @@ vice("Adam Paterson", "ESL Challenger League Season 46: North America", "BOSS").
 
 nick("Brett Rhein", "brett").
 entry_year("Brett Rhein", 2020).
+image("Brett Rhein", "https://liquipedia.net/commons/images/thumb/4/42/Brett_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Brett_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Brett Rhein", 25).
 birth_month("Brett Rhein", "June").
@@ -7996,6 +8266,7 @@ vice("Brett Rhein", "ESEA Cash Cup: North America - Spring 2021 #5", "Third Impa
 
 nick("Matthew Paplawskas", "d4rty").
 entry_year("Matthew Paplawskas", 2020).
+image("Matthew Paplawskas", "https://liquipedia.net/commons/images/thumb/9/96/D4rty_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-D4rty_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Matthew Paplawskas", 19).
 birth_month("Matthew Paplawskas", "September").
@@ -8027,6 +8298,7 @@ vice("Matthew Paplawskas", "Fragadelphia 16: Chicago", "all aim no name").
 
 nick("Josh Pigue", "PwnAlone").
 entry_year("Josh Pigue", 2017).
+image("Josh Pigue", "https://liquipedia.net/commons/images/thumb/d/da/PwnAlone_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-PwnAlone_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Josh Pigue", 33).
 birth_month("Josh Pigue", "January").
@@ -8068,6 +8340,7 @@ vice("Josh Pigue", "Fragadelphia 15", "Party Astronauts").
 
 nick("Tommy Ryan", "Axed").
 entry_year("Tommy Ryan", 2016).
+image("Tommy Ryan", "https://liquipedia.net/commons/images/thumb/7/76/Axed_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Axed_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Tommy Ryan", 22).
 birth_month("Tommy Ryan", "May").
@@ -8098,6 +8371,7 @@ vice("Tommy Ryan", "FACEIT Pro League - North America: November 2021 Week 1", "R
 
 nick("Jerric Jiang", "wiz").
 entry_year("Jerric Jiang", 2018).
+image("Jerric Jiang", "https://liquipedia.net/commons/images/thumb/c/c9/Wiz_Fragadelphia_17.jpg/600px-Wiz_Fragadelphia_17.jpg").
                      
 age("Jerric Jiang", 23).
 birth_month("Jerric Jiang", "February").
@@ -8129,6 +8403,7 @@ vice("Jerric Jiang", "ESL Challenger League Season 40: North America", "Carpe Di
 
 nick("Jack Ryan", "micro").
 entry_year("Jack Ryan", 2018).
+image("Jack Ryan", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Jack Ryan", 21).
 birth_month("Jack Ryan", "July").
@@ -8158,6 +8433,7 @@ vice("Jack Ryan", "ESEA Cash Cup Circuit 2023: North American Cup #2", "Detonate
 
 nick("Ioannis Theodosiou", "JT").
 entry_year("Ioannis Theodosiou", 2015).
+image("Ioannis Theodosiou", "https://liquipedia.net/commons/images/thumb/1/13/JT_at_IEM_Katowice_2024.jpg/600px-JT_at_IEM_Katowice_2024.jpg").
                      
 age("Ioannis Theodosiou", 24).
 birth_month("Ioannis Theodosiou", "April").
@@ -8190,6 +8466,7 @@ vice("Ioannis Theodosiou", "DreamHack Open Winter 2018", "Bravado Gaming").
 
 nick("Ricky Kemery", "floppy").
 entry_year("Ricky Kemery", 2015).
+image("Ricky Kemery", "https://liquipedia.net/commons/images/thumb/e/ed/Floppy_at_IEM_Katowice_2024.jpg/600px-Floppy_at_IEM_Katowice_2024.jpg").
                      
 age("Ricky Kemery", 24).
 birth_month("Ricky Kemery", "December").
@@ -8226,6 +8503,7 @@ vice("Ricky Kemery", "Intel Extreme Masters Sydney 2023", "Complexity Gaming").
 
 nick("Michael Vance Wince", "Grim").
 entry_year("Michael Vance Wince", 2017).
+image("Michael Vance Wince", "https://liquipedia.net/commons/images/thumb/b/bb/Grim_at_IEM_Katowice_2024.jpg/600px-Grim_at_IEM_Katowice_2024.jpg").
                      
 age("Michael Vance Wince", 23).
 birth_month("Michael Vance Wince", "November").
@@ -8259,6 +8537,7 @@ vice("Michael Vance Wince", "ESL One: Cologne 2020 Online - North America", "Tea
 
 nick("Håkon Fjærli", "hallzerk").
 entry_year("Håkon Fjærli", 2016).
+image("Håkon Fjærli", "https://liquipedia.net/commons/images/thumb/a/ac/Hallzerk_at_IEM_Katowice_2024.jpg/600px-Hallzerk_at_IEM_Katowice_2024.jpg").
                      
 age("Håkon Fjærli", 23).
 birth_month("Håkon Fjærli", "July").
@@ -8289,6 +8568,7 @@ vice("Håkon Fjærli", "ALL IN Series", "Dignitas").
 
 nick("Jonathan David Jablonowski", "EliGE").
 entry_year("Jonathan David Jablonowski", 2014).
+image("Jonathan David Jablonowski", "https://liquipedia.net/commons/images/thumb/2/2f/EliGE_at_IEM_Katowice_2024.jpg/600px-EliGE_at_IEM_Katowice_2024.jpg").
                      
 age("Jonathan David Jablonowski", 26).
 birth_month("Jonathan David Jablonowski", "July").
@@ -8316,6 +8596,7 @@ vice("Jonathan David Jablonowski", "ESL One: Cologne 2016", "Team Liquid").
 
 nick("Tiaan Coertzen", "c").
 entry_year("Tiaan Coertzen", 2014).
+image("Tiaan Coertzen", "https://liquipedia.net/commons/images/thumb/6/6f/T.c_at_IEM_Sydney_2023.jpg/600px-T.c_at_IEM_Sydney_2023.jpg").
                      
 age("Tiaan Coertzen", 31).
 birth_month("Tiaan Coertzen", "August").
@@ -8343,6 +8624,7 @@ vice("Tiaan Coertzen", "ESWC 2014", "eNergy eSports").
 
 nick("Wyatt Phillippi", "snav").
 entry_year("Wyatt Phillippi", 2019).
+image("Wyatt Phillippi", "https://liquipedia.net/commons/images/thumb/7/78/Snav_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Snav_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Wyatt Phillippi", 23).
 birth_month("Wyatt Phillippi", "January").
@@ -8382,6 +8664,7 @@ vice("Wyatt Phillippi", "ESEA Cash Cup: North America - Summer 2022 #6", "Iron B
 
 nick("Derek Brown", "dare").
 entry_year("Derek Brown", 2019).
+image("Derek Brown", "https://liquipedia.net/commons/images/thumb/6/67/Dare_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Dare_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Derek Brown", 22).
 birth_month("Derek Brown", "July").
@@ -8422,6 +8705,7 @@ vice("Derek Brown", "ESEA Cash Cup: North America - Summer 2022 #6", "Iron Blood
 
 nick("Shane Dressler", "shane").
 entry_year("Shane Dressler", 2019).
+image("Shane Dressler", "https://liquipedia.net/commons/images/thumb/3/3f/Shane_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Shane_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Shane Dressler", 20).
 birth_month("Shane Dressler", "May").
@@ -8453,12 +8737,12 @@ champion("Shane Dressler", "The Standoff", "timbermen").
 champion("Shane Dressler", "EGL Premier: Summer 2022", "timbermen").
 champion("Shane Dressler", "Fragadelphia 17: Fullerton #2", "timbermen").
 vice("Shane Dressler", "ESEA Cash Cup: North America - Summer 2022 #6", "Iron Blood Gaming").
-vice("Shane Dressler", "Fragadelphia 17: Philadelphia", "LGG").
 vice("Shane Dressler", "ESEA Season 41: Advanced Division - North America", "timbermen").
 
 
 nick("Jaxon Cornwell", "Peeping").
 entry_year("Jaxon Cornwell", 2021).
+image("Jaxon Cornwell", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Jaxon Cornwell", 18).
 birth_month("Jaxon Cornwell", "May").
@@ -8482,6 +8766,7 @@ vice("Jaxon Cornwell", "FACEIT Pro League - North America: July 2023 Week 1", "F
 
 nick("Deni Ediev", "dea").
 entry_year("Deni Ediev", 2021).
+image("Deni Ediev", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Deni Ediev", 20).
 birth_month("Deni Ediev", "February").
@@ -8506,6 +8791,7 @@ vice("Deni Ediev", "Roobet Arena August 2023: North America", "FLUFFY AIMERS").
 
 nick("Diego Camacho", "sacrifice").
 entry_year("Diego Camacho", 2020).
+image("Diego Camacho", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Diego Camacho", 20).
 birth_month("Diego Camacho", "September").
@@ -8531,6 +8817,7 @@ champion("Diego Camacho", "ESEA Advanced Cash Cup: North America 2022 #1", "Take
 
 nick("Israel Vargas", "LEARSI").
 entry_year("Israel Vargas", 2020).
+image("Israel Vargas", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Israel Vargas", 21).
 birth_month("Israel Vargas", "December").
@@ -8559,6 +8846,7 @@ vice("Israel Vargas", "Fragadelphia 16: Denver", "Team Volted").
 
 nick("Jason Garcia", "jason").
 entry_year("Jason Garcia", 2021).
+image("Jason Garcia", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Jason Garcia", 21).
 birth_month("Jason Garcia", "April").
@@ -8585,6 +8873,7 @@ vice("Jason Garcia", "Fragadelphia 16: Denver", "Team Volted").
 
 nick("Fern Hak", "intra").
 entry_year("Fern Hak", 2020).
+image("Fern Hak", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Fern Hak", 21).
 birth_month("Fern Hak", "October").
@@ -8612,6 +8901,7 @@ vice("Fern Hak", "ESEA Season 41: Advanced Division - North America", "timbermen
 
 nick("Darius Bandali", "PNDLM").
 entry_year("Darius Bandali", 2020).
+image("Darius Bandali", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Darius Bandali", 23).
 birth_month("Darius Bandali", "October").
@@ -8640,6 +8930,7 @@ vice("Darius Bandali", "Lan ETS 2022", "Plasma VitaPLUR gum").
 
 nick("Keith Jordan Markovic", "NAF").
 entry_year("Keith Jordan Markovic", 2013).
+image("Keith Jordan Markovic", "https://liquipedia.net/commons/images/thumb/0/0e/NAF_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-NAF_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Keith Jordan Markovic", 26).
 birth_month("Keith Jordan Markovic", "November").
@@ -8676,6 +8967,7 @@ vice("Keith Jordan Markovic", "ELEAGUE Premier 2018", "Team Liquid").
 
 nick("Mareks Gaļinskis", "YEKINDAR").
 entry_year("Mareks Gaļinskis", 2017).
+image("Mareks Gaļinskis", "https://liquipedia.net/commons/images/thumb/1/13/YEKINDAR_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-YEKINDAR_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Mareks Gaļinskis", 24).
 birth_month("Mareks Gaļinskis", "October").
@@ -8704,6 +8996,7 @@ vice("Mareks Gaļinskis", "Intel Extreme Masters XV - World Championship", "Virt
 
 nick("Felipe Medeiros", "skullz").
 entry_year("Felipe Medeiros", 2017).
+image("Felipe Medeiros", "https://liquipedia.net/commons/images/thumb/0/0c/Skullz_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Skullz_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Felipe Medeiros", 21).
 birth_month("Felipe Medeiros", "April").
@@ -8741,6 +9034,7 @@ vice("Felipe Medeiros", "FiReLEAGUE 2022: Global Finals", "paiN Gaming").
 
 nick("Casper Møller", "cadiaN").
 entry_year("Casper Møller", 2011).
+image("Casper Møller", "https://liquipedia.net/commons/images/thumb/1/12/CadiaN_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-CadiaN_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Casper Møller", 28).
 birth_month("Casper Møller", "June").
@@ -8786,6 +9080,7 @@ vice("Casper Møller", "Intel Extreme Masters Rio Major 2022", "Heroic").
 
 nick("Russel David Kevin Van Dulken", "Twistzz").
 entry_year("Russel David Kevin Van Dulken", 2015).
+image("Russel David Kevin Van Dulken", "https://liquipedia.net/commons/images/thumb/3/3b/Twistzz_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Twistzz_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Russel David Kevin Van Dulken", 24).
 birth_month("Russel David Kevin Van Dulken", "November").
@@ -8818,6 +9113,7 @@ champion("Russel David Kevin Van Dulken", "ESL Pro League Season 9 - Finals", "T
 
 nick("Wilton Prado", "zews").
 entry_year("Wilton Prado", 2002).
+image("Wilton Prado", "https://liquipedia.net/commons/images/thumb/e/e2/Zews_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Zews_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Wilton Prado", 36).
 birth_month("Wilton Prado", "November").
@@ -8855,6 +9151,7 @@ champion("Wilton Prado", "Northern Arena 2016 - Toronto", "Immortals").
 
 nick("Michael Schmid", "Swisher").
 entry_year("Michael Schmid", 2017).
+image("Michael Schmid", "https://liquipedia.net/commons/images/thumb/7/71/Swisher_at_IEM_Katowice_2024.jpg/600px-Swisher_at_IEM_Katowice_2024.jpg").
                      
 age("Michael Schmid", 25).
 birth_month("Michael Schmid", "September").
@@ -8895,6 +9192,7 @@ champion("Michael Schmid", "ESEA Cash Cup: North America - Winter 2020 #3", "Bad
 
 nick("Ethan Serrano", "reck").
 entry_year("Ethan Serrano", 2018).
+image("Ethan Serrano", "https://liquipedia.net/commons/images/thumb/d/d6/Reck_at_IEM_Katowice_2024.jpg/600px-Reck_at_IEM_Katowice_2024.jpg").
                      
 age("Ethan Serrano", 20).
 birth_month("Ethan Serrano", "November").
@@ -8937,6 +9235,7 @@ vice("Ethan Serrano", "ESEA Cash Cup: North America - Autumn 2022 #5", "Strife E
 
 nick("Mario Alberto Samayoa Díaz", "malbsMd").
 entry_year("Mario Alberto Samayoa Díaz", 2015).
+image("Mario Alberto Samayoa Díaz", "https://liquipedia.net/commons/images/thumb/4/46/MalbsMd_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-MalbsMd_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Mario Alberto Samayoa Díaz", 21).
 birth_month("Mario Alberto Samayoa Díaz", "October").
@@ -8973,6 +9272,7 @@ vice("Mario Alberto Samayoa Díaz", "ESEA Season 33: Premier Division - North Am
 
 nick("Fritz Dietrich", "Error").
 entry_year("Fritz Dietrich", 2017).
+image("Fritz Dietrich", "https://liquipedia.net/commons/images/thumb/7/79/Slaxz-_at_IEM_Katowice_2024.jpg/600px-Slaxz-_at_IEM_Katowice_2024.jpg").
                      
 age("Fritz Dietrich", 25).
 birth_month("Fritz Dietrich", "November").
@@ -9005,6 +9305,7 @@ champion("Fritz Dietrich", "ESL Meisterschaft: Spring 2019", "ALTERNATE aTTaX").
 
 nick("Rory Jackson", "dephh").
 entry_year("Rory Jackson", 2013).
+image("Rory Jackson", "https://liquipedia.net/commons/images/thumb/d/d4/Dephh_at_IEM_Katowice_2024.jpg/600px-Dephh_at_IEM_Katowice_2024.jpg").
                      
 age("Rory Jackson", 32).
 birth_month("Rory Jackson", "December").
@@ -9025,6 +9326,7 @@ vice("Rory Jackson", "MSI Gaming Arena 2018", "compLexity Gaming").
 
 nick("Erik Flom", "fl0m").
 entry_year("Erik Flom", 2012).
+image("Erik Flom", "https://liquipedia.net/commons/images/thumb/0/00/Fl0m_ROG_Masters_2019.jpg/600px-Fl0m_ROG_Masters_2019.jpg").
                      
 age("Erik Flom", 31).
 birth_month("Erik Flom", "September").
@@ -9053,6 +9355,7 @@ vice("Erik Flom", "Gfinity Spring Series 2018 - North America", "Mythic").
 
 nick("Ryan Abadir", "freakazoid").
 entry_year("Ryan Abadir", 2008).
+image("Ryan Abadir", "https://liquipedia.net/commons/images/thumb/6/6e/Freakazoid_%40_cs_summit_4.jpg/600px-Freakazoid_%40_cs_summit_4.jpg").
                      
 age("Ryan Abadir", 31).
 birth_month("Ryan Abadir", "November").
@@ -9091,6 +9394,7 @@ vice("Ryan Abadir", "ESL ESEA Pro League Season 1 - Finals", "Cloud9").
 
 nick("Austin Abadir", "Cooper").
 entry_year("Austin Abadir", 2017).
+image("Austin Abadir", "https://liquipedia.net/commons/images/thumb/d/d9/Triumph_Cooper.png/600px-Triumph_Cooper.png").
                      
 age("Austin Abadir", 29).
 birth_month("Austin Abadir", "May").
@@ -9116,6 +9420,7 @@ vice("Austin Abadir", "WESG 2018 USA", "Swole Patrol").
 
 nick("Nicholas Young", "hate").
 entry_year("Nicholas Young", 2019).
+image("Nicholas Young", "https://liquipedia.net/commons/images/1/19/Infobox_player_NoImage.png").
                      
 age("Nicholas Young", 23).
 birth_month("Nicholas Young", "October").
@@ -9152,6 +9457,7 @@ vice("Nicholas Young", "All In Esports Expo 2021", "F1 Racecar").
 
 nick("Carson O'Reilly", "nosraC").
 entry_year("Carson O'Reilly", 2018).
+image("Carson O'Reilly", "https://liquipedia.net/commons/images/thumb/9/98/NosraC_at_ESL_Challenger_Jonkoping_2023.jpg/600px-NosraC_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("Carson O'Reilly", 24).
 birth_month("Carson O'Reilly", "February").
@@ -9183,6 +9489,7 @@ vice("Carson O'Reilly", "DreamHack Open January 2021: North America", "Rebirth E
 
 nick("Christopher Jones", "K1nG").
 entry_year("Christopher Jones", 2015).
+image("Christopher Jones", "https://liquipedia.net/commons/images/thumb/b/bb/CJ_at_ESL_Challenger_Jonkoping_2023.jpg/600px-CJ_at_ESL_Challenger_Jonkoping_2023.jpg").
                      
 age("Christopher Jones", 26).
 birth_month("Christopher Jones", "September").
@@ -9223,6 +9530,7 @@ vice("Christopher Jones", "ESEA Season 21: Premier Division - NA Finals", "Ze Pu
 
 nick("Edgar Maldonado", "MarKE").
 entry_year("Edgar Maldonado", 2015).
+image("Edgar Maldonado", "https://liquipedia.net/commons/images/thumb/7/7e/MarKE_at_IEM_Dallas_2023.jpg/600px-MarKE_at_IEM_Dallas_2023.jpg").
                      
 age("Edgar Maldonado", 25).
 birth_month("Edgar Maldonado", "May").
@@ -9261,6 +9569,7 @@ vice("Edgar Maldonado", "Funspark ULTI 2020", "Extra Salt").
 
 nick("Jeorge Endicott", "Jeorge").
 entry_year("Jeorge Endicott", 2020).
+image("Jeorge Endicott", "https://liquipedia.net/commons/images/thumb/7/7a/Jeorge_at_Copenhagen_Major_2024_AME_RMR.jpg/600px-Jeorge_at_Copenhagen_Major_2024_AME_RMR.jpg").
                      
 age("Jeorge Endicott", 20).
 birth_month("Jeorge Endicott", "April").
@@ -9293,6 +9602,7 @@ vice("Jeorge Endicott", "ESEA Season 39: Premier Division - North America", "Cho
 
 nick("Paytyn Johnson", "junior").
 entry_year("Paytyn Johnson", 2017).
+image("Paytyn Johnson", "https://liquipedia.net/commons/images/thumb/1/14/Junior_%40_PGL_Antwerp_2022_AME_RMR.jpg/600px-Junior_%40_PGL_Antwerp_2022_AME_RMR.jpg").
                      
 age("Paytyn Johnson", 23).
 birth_month("Paytyn Johnson", "December").
@@ -9326,6 +9636,7 @@ vice("Paytyn Johnson", "Intel Extreme Masters XV - Beijing Online: North America
 
 nick("Kory Friesen", "SEMPHIS").
 entry_year("Kory Friesen", 2009).
+image("Kory Friesen", "https://liquipedia.net/commons/images/thumb/5/5b/SEMPHIS_at_IEM_Dallas_2023.jpg/600px-SEMPHIS_at_IEM_Dallas_2023.jpg").
                      
 age("Kory Friesen", 34).
 birth_month("Kory Friesen", "April").
@@ -9366,3 +9677,74 @@ vice("Kory Friesen", "ESEA Global Finals Season 14", "compLexity Gaming").
 vice("Kory Friesen", "ESEA Global Finals Season 13", "Quantic Gaming").
 
 
+
+team_img("Lemondogs", "https://liquipedia.net/commons/images/b/bf/Lemondogs_2018_full_allmode.png").
+team_img("Lilmix", "https://liquipedia.net/commons/images/thumb/e/ea/Lilmix_lightmode.png/600px-Lilmix_lightmode.png").
+team_img("MASONIC", "https://liquipedia.net/commons/images/thumb/e/ee/MASONIC_2022_full_lightmode.png/600px-MASONIC_2022_full_lightmode.png").
+team_img("Metizport", "https://liquipedia.net/commons/images/thumb/8/81/Metizport_2023_allmode.png/600px-Metizport_2023_allmode.png").
+team_img("Ninjas in Pyjamas", "https://liquipedia.net/commons/images/thumb/4/42/Ninjas_in_Pyjamas_2021_full_lightmode.png/600px-Ninjas_in_Pyjamas_2021_full_lightmode.png").
+team_img("Preasy Esport", "https://liquipedia.net/commons/images/thumb/0/0d/Preasy_Esport_full_lightmode.png/600px-Preasy_Esport_full_lightmode.png").
+team_img("Sashi Esport", "https://liquipedia.net/commons/images/e/e3/Sashi_Esport_2023_allmode.png").
+team_img("Team Secret", "https://liquipedia.net/commons/images/thumb/4/45/Team_Secret_full_lightmode.png/600px-Team_Secret_full_lightmode.png").
+team_img("Sprout", "https://liquipedia.net/commons/images/thumb/6/67/Sprout_full_lightmode.png/600px-Sprout_full_lightmode.png").
+team_img("Wizard esports (Norwegian team)", "https://liquipedia.net/commons/images/thumb/5/54/Wizard_esports_2022_lightmode.png/600px-Wizard_esports_2022_lightmode.png").
+team_img("GTZ.ESPORTS", "https://liquipedia.net/commons/images/thumb/d/df/GTZ_ESPORTS_full_lightmode.png/600px-GTZ_ESPORTS_full_lightmode.png").
+team_img("Rhyno Esports", "https://liquipedia.net/commons/images/thumb/7/75/Rhyno_Esports_2020_allmode.png/600px-Rhyno_Esports_2020_allmode.png").
+team_img("SAW", "https://liquipedia.net/commons/images/thumb/3/3e/SAW_2021_full_lightmode.png/600px-SAW_2021_full_lightmode.png").
+team_img("500", "https://liquipedia.net/commons/images/thumb/d/d0/500_2023_allmode.png/600px-500_2023_allmode.png").
+team_img("9INE", "https://liquipedia.net/commons/images/thumb/d/da/9INE_2022_lightmode.png/600px-9INE_2022_lightmode.png").
+team_img("Apeks", "https://liquipedia.net/commons/images/thumb/d/dc/Apeks_2021_full_darkmode.png/600px-Apeks_2021_full_darkmode.png").
+team_img("AVEZ", "https://liquipedia.net/commons/images/thumb/8/8b/AVEZ_allmode.png/600px-AVEZ_allmode.png").
+team_img("B8", "https://liquipedia.net/commons/images/thumb/c/c6/B8_lightmode.png/600px-B8_lightmode.png").
+team_img("Békéscsabai E-Sport Egyesület", "https://liquipedia.net/commons/images/thumb/1/1b/B%C3%A9k%C3%A9scsabai_E-sport_Egyes%C3%BClet_full_lightmode.png/600px-B%C3%A9k%C3%A9scsabai_E-sport_Egyes%C3%BClet_full_lightmode.png").
+team_img("BRUTE", "https://liquipedia.net/commons/images/thumb/8/83/Team_Brute_2020_lightmode.png/600px-Team_Brute_2020_lightmode.png").
+team_img("Dynamo Eclot", "https://liquipedia.net/commons/images/thumb/c/c4/Dynamo_Eclot_allmode.png/600px-Dynamo_Eclot_allmode.png").
+team_img("ENCE", "https://liquipedia.net/commons/images/thumb/b/ba/ENCE_2020_full_lightmode.png/600px-ENCE_2020_full_lightmode.png").
+team_img("ENTERPRISE esports", "https://liquipedia.net/commons/images/thumb/5/56/ENTERPRISE_Esports_2023_allmode.png/600px-ENTERPRISE_Esports_2023_allmode.png").
+team_img("Entropiq", "https://liquipedia.net/commons/images/thumb/f/f7/Entropiq_full_allmode.png/600px-Entropiq_full_allmode.png").
+team_img("ESC Gaming", "https://liquipedia.net/commons/images/b/be/ESC_Gaming_2023_full_allmode.png").
+team_img("Eternal Fire", "https://liquipedia.net/commons/images/thumb/e/ec/Eternal_Fire_2023_allmode.png/600px-Eternal_Fire_2023_allmode.png").
+team_img("G2 Esports", "https://liquipedia.net/commons/images/thumb/2/27/G2_Esports_2020_full_lightmode.png/600px-G2_Esports_2020_full_lightmode.png").
+team_img("Guild Eagles", "https://liquipedia.net/commons/images/thumb/3/30/Guild_Eagles_full_allmode.png/600px-Guild_Eagles_full_allmode.png").
+team_img("Illuminar Gaming", "https://liquipedia.net/commons/images/thumb/1/1a/Illuminar_Gaming_allmode.png/600px-Illuminar_Gaming_allmode.png").
+team_img("Into The Breach", "https://liquipedia.net/commons/images/thumb/8/84/Into_The_Breach_Pink_2022_allmode.png/600px-Into_The_Breach_Pink_2022_allmode.png").
+team_img("Los kogutos", "https://liquipedia.net/commons/images/thumb/5/5f/Los_kogutos_allmode.png/600px-Los_kogutos_allmode.png").
+team_img("Monte", "https://liquipedia.net/commons/images/thumb/2/22/Monte_2022_allmode.png/600px-Monte_2022_allmode.png").
+team_img("MOUZ", "https://liquipedia.net/commons/images/thumb/a/a5/MOUZ_2021_full_allmode.png/600px-MOUZ_2021_full_allmode.png").
+team_img("Natus Vincere", "https://liquipedia.net/commons/images/thumb/3/3f/Natus_Vincere_2021_lightmode.png/600px-Natus_Vincere_2021_lightmode.png").
+team_img("Nexus Gaming", "https://liquipedia.net/commons/images/thumb/1/1e/Nexus_Gaming_2020_allmode.png/600px-Nexus_Gaming_2020_allmode.png").
+team_img("OG", "https://liquipedia.net/commons/images/thumb/7/70/OG_RB_allmode.png/600px-OG_RB_allmode.png").
+team_img("Pera Esports", "https://liquipedia.net/commons/images/c/c7/Pera_Esports_allmode.png").
+team_img("Permitta Esports", "https://liquipedia.net/commons/images/thumb/c/c6/Permitta_Esports_full_allmode.png/600px-Permitta_Esports_full_allmode.png").
+team_img("SINNERS Esports", "https://liquipedia.net/commons/images/thumb/0/09/SINNERS_Esports_full_allmode.png/600px-SINNERS_Esports_full_allmode.png").
+team_img("Team Sampi", "https://liquipedia.net/commons/images/thumb/1/13/Team_Sampi_2023_lightmode.png/600px-Team_Sampi_2023_lightmode.png").
+team_img("Sangal Esports", "https://liquipedia.net/commons/images/thumb/7/7a/Sangal_Esports_2020_allmode.png/600px-Sangal_Esports_2020_allmode.png").
+team_img("ThunderFlash", "https://liquipedia.net/commons/images/thumb/f/f4/ThunderFlash_May_2023_lightmode.png/600px-ThunderFlash_May_2023_lightmode.png").
+team_img("Turów Zgorzelec Esport", "https://liquipedia.net/commons/images/thumb/9/93/Tur%C3%B3w_Zgorzelec_allmode_full.png/600px-Tur%C3%B3w_Zgorzelec_allmode_full.png").
+team_img("Zero Tenacity", "https://liquipedia.net/commons/images/thumb/1/1e/Zero_Tenacity_2022_full_lightmode.png/600px-Zero_Tenacity_2022_full_lightmode.png").
+team_img("9Pandas", "https://liquipedia.net/commons/images/f/fe/9Pandas_full_allmode.png").
+team_img("ARCRED", "https://liquipedia.net/commons/images/thumb/4/44/ARCRED_2023_allmode.png/600px-ARCRED_2023_allmode.png").
+team_img("Aurora Gaming", "https://liquipedia.net/commons/images/thumb/1/18/Aurora_Gaming_2023_allmode.png/600px-Aurora_Gaming_2023_allmode.png").
+team_img("AVANGAR", "https://liquipedia.net/commons/images/thumb/6/68/AVANGAR_2019_full_lightmode.png/600px-AVANGAR_2019_full_lightmode.png").
+team_img("BetBoom Team", "https://liquipedia.net/commons/images/thumb/8/8d/BetBoom_Team_mar_2023_allmode.png/600px-BetBoom_Team_mar_2023_allmode.png").
+team_img("Betera Esports", "https://liquipedia.net/commons/images/thumb/c/c3/Betera_2024_allmode.png/600px-Betera_2024_allmode.png").
+team_img("Cloud9", "https://liquipedia.net/commons/images/thumb/a/a2/Cloud9_2023_full_allmode.png/600px-Cloud9_2023_full_allmode.png").
+team_img("FORZE Esports", "https://liquipedia.net/commons/images/thumb/9/99/FORZE_Esports_2023_february_full_lightmode.png/600px-FORZE_Esports_2023_february_full_lightmode.png").
+team_img("GR Gaming", "https://liquipedia.net/commons/images/thumb/b/b1/GR_Gaming_allmode.png/600px-GR_Gaming_allmode.png").
+team_img("HOTU", "https://liquipedia.net/commons/images/thumb/1/17/HOTU_2022_lightmode.png/600px-HOTU_2022_lightmode.png").
+team_img("Insilio", "https://liquipedia.net/commons/images/4/4e/Insilio_lightmode.png").
+team_img("K23", "https://liquipedia.net/commons/images/thumb/5/50/K23_2020_lightmode.png/600px-K23_2020_lightmode.png").
+team_img("Nemiga Gaming", "https://liquipedia.net/commons/images/5/53/Nemiga_Gaming_2020_red_full_allmode.png").
+team_img("Team Spirit", "https://liquipedia.net/commons/images/thumb/f/f2/Team_Spirit_2022_full_lightmode.png/600px-Team_Spirit_2022_full_lightmode.png").
+team_img("TRAFFIC Tashkent Team", "https://liquipedia.net/commons/images/thumb/4/4a/TT_Team_full_allmode.png/600px-TT_Team_full_allmode.png").
+team_img("Virtus.pro", "https://liquipedia.net/commons/images/thumb/c/c0/Virtus.pro_2019_allmode.png/600px-Virtus.pro_2019_allmode.png").
+team_img("BOSS", "https://liquipedia.net/commons/images/thumb/9/92/Boss_CS2_allmode.png/600px-Boss_CS2_allmode.png").
+team_img("Carpe Diem", "Unkown").
+team_img("Complexity Gaming", "https://liquipedia.net/commons/images/thumb/2/21/Complexity_Gaming_2019_lightmode_full.png/600px-Complexity_Gaming_2019_lightmode_full.png").
+team_img("Detonate", "https://liquipedia.net/commons/images/thumb/2/23/DETONATE_allmode.png/600px-DETONATE_allmode.png").
+team_img("Elevate", "https://liquipedia.net/commons/images/thumb/3/35/Elevate_2020_full_lightmode.png/600px-Elevate_2020_full_lightmode.png").
+team_img("FLUFFY AIMERS", "https://liquipedia.net/commons/images/thumb/7/7d/FLUFFY_AIMERS_2024_full_allmode.png/600px-FLUFFY_AIMERS_2024_full_allmode.png").
+team_img("Team Liquid", "https://liquipedia.net/commons/images/thumb/f/f5/Team_Liquid_2024_full_lightmode.png/600px-Team_Liquid_2024_full_lightmode.png").
+team_img("M80", "https://liquipedia.net/commons/images/thumb/5/55/M80_2023_allmode.png/600px-M80_2023_allmode.png").
+team_img("Mythic", "https://liquipedia.net/commons/images/thumb/6/60/Mythic_2017_full_allmode.png/600px-Mythic_2017_full_allmode.png").
+team_img("Nouns Esports", "https://liquipedia.net/commons/images/thumb/e/ea/Nouns_Esports_CSGO_allmode.png/600px-Nouns_Esports_CSGO_allmode.png").

@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from urllib.parse import unquote
 import re
-from typing import List
+from typing import List, NamedTuple, Tuple
 from bs4 import BeautifulSoup
 import requests
 from time import sleep
@@ -22,6 +22,7 @@ class TournamentResult:
 class Player:
     nick: str
     name: str
+    image: str
     nationality: List[str]
     birth: str
     activite: str
@@ -32,8 +33,14 @@ class Player:
     champion: List[TournamentResult] = field(default_factory=list)
     vice: List[TournamentResult] = field(default_factory=list)
 
+class Team(NamedTuple):
+    name: str
+    img_url: str
+
+
 def get_team() -> List[str]:
     links: List[str] = []
+    teams: List[Team] = []
     result = requests.get(r"https://liquipedia.net/counterstrike/Portal:Teams")
 
     bs = BeautifulSoup(result.text, features='lxml')
@@ -51,16 +58,24 @@ class PlayerLink:
     link: str
     captain: str
 
-def get_players(teams: List[str]) -> List[PlayerLink]:
+def get_players(teams: List[str]) -> Tuple[List[PlayerLink], List[Team]]:
     pls:List[PlayerLink] = []
-    for team in teams[50:120]:
+    _team: List[Team] = []
+    for team in teams[50:120]: 
         sleep(0.250)
         result = requests.get(f"https://liquipedia.net{team}")
         print(team, result)
         bs = BeautifulSoup(result.text, features='lxml')
 
         table = bs.find_all('div', class_='table-responsive')[0]
+        img_table = bs.find_all('div', class_='fo-nttax-infobox')[0]
         players = table.find_all('tr', class_='Player')
+        try:
+            img =  f"https://liquipedia.net{img_table.find_all('div', recursive=False)[1].find('img')['src']}"
+        except TypeError:
+            img = "Unkown"
+        _team.append(Team(unquote(team.replace("/counterstrike/",'')).replace('_', ' '), img))
+        print('\t', _team[-1])
         for p in players:
             anchors = p.find_all('a')
             player = PlayerLink(anchors[0]['href'], unquote(team.replace("/counterstrike/",'')).replace('_', ' ') if p.find('a', title="Captain") else '')
@@ -69,7 +84,7 @@ def get_players(teams: List[str]) -> List[PlayerLink]:
             print('\t', player)
             pls.append(player)
 
-    return pls
+    return pls, _team
 
 def get_player_info(player: PlayerLink) -> Player | None:
     print(f"https://liquipedia.net{player.link}")
@@ -93,6 +108,10 @@ def get_player_info(player: PlayerLink) -> Player | None:
         nick = nick.group(0)
     else:
         nick = "Error"
+    try:
+        img = f"https://liquipedia.net{info[1].find('img')['src']}"
+    except (IndexError, TypeError):
+        img = "Unkown"
     info = info[3:]
 
     data = {}
@@ -161,7 +180,7 @@ def get_player_info(player: PlayerLink) -> Player | None:
     print(nick, name, nati, birth, acti, role, player.captain, team, sep='\n\t', end='\n\n')
     if not nick or not name or not nati or not birth or not acti or not role or not team:
         return None
-    p = Player(nick, name, nati, birth, acti, role, player.captain, team)
+    p = Player(nick, name, img, nati, birth, acti, role, player.captain, team)
     hist = info[-1].find('div', class_='infobox-center').find_all('div', recursive=False)
     for i in range(0, len(hist), 2):
         reco = hist[i]
@@ -192,11 +211,12 @@ def get_player_info(player: PlayerLink) -> Player | None:
 
 
 
-def dump_players(players: List[Player]) -> None:
+def dump_players(players: List[Player], teams: List[Team]) -> None:
     with open('prolog.txt', 'w',  encoding="utf-8") as db:
         db.write(
 """:- discontiguous
         nick/2,
+        image/2,
         age/2,
     	role/2,
         birth_month/2,
@@ -208,7 +228,8 @@ def dump_players(players: List[Player]) -> None:
         former_team/2,
         captain/2,
         champion/3,
-        vice/3.
+        vice/3,
+        team_img/2.
 
 """)
         with open('rules.txt', 'r', encoding='utf-8') as rules:
@@ -218,7 +239,7 @@ def dump_players(players: List[Player]) -> None:
             print("writting player: ", player.name)
             db.write(f"""nick("{player.name}", "{player.nick}").
 entry_year("{player.name}", {player.activite[:4]}).
-                     """)
+image("{player.name}", "{player.image}").""")
             if player.birth:
                 parse_birth = re.search(r'(\w*)\s+(\d*),\s+(\d*)\s+\(.*?(\d*)\)', player.birth)
                 if parse_birth == None:
@@ -249,13 +270,15 @@ birth_day("{player.name}", {day}).
             db.writelines([f"champion(\"{player.name}\", \"{tour.tournament}\", \"{tour.team}\").\n" for tour in player.champion])
             db.writelines([f"vice(\"{player.name}\", \"{tour.tournament}\", \"{tour.team}\").\n" for tour in player.vice])
             db.write('\n\n')
+        for team in teams:
+            db.write(f"team_img(\"{team.name}\", \"{team.img_url}\").\n")
 
 
 
 def main() -> None:
     foo = get_team()
     print(foo[0], len(foo))
-    links = get_players(foo)
+    links, teams = get_players(foo)
 
 
     print(len(links))
@@ -266,7 +289,7 @@ def main() -> None:
         if p:
             players.append(p)
 
-    dump_players(players)
+    dump_players(players, teams)
 
 
 if __name__ == '__main__':
